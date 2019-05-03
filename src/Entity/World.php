@@ -39,12 +39,12 @@ class World
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Quizz", mappedBy="world")
+     * @ORM\OneToMany(targetEntity="App\Entity\Quizz", mappedBy="world")
      */
     private $quizzs;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Puzzle", mappedBy="world")
+     * @ORM\OneToMany(targetEntity="App\Entity\Puzzle", mappedBy="world")
      */
     private $puzzles;
 
