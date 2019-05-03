@@ -49,9 +49,9 @@ class Puzzle
     private $categories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\World", inversedBy="puzzles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\World", inversedBy="puzzles")
      */
-    private $worlds;
+    private $world;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MakePuzzle", mappedBy="puzzle", orphanRemoval=true)
@@ -61,7 +61,6 @@ class Puzzle
     public function __construct()
     {
         $this->categories = new ArrayCollection();
-        $this->worlds = new ArrayCollection();
         $this->makePuzzles = new ArrayCollection();
         $this->created_at = new \DateTime();
     }
@@ -157,28 +156,14 @@ class Puzzle
         return $this;
     }
 
-    /**
-     * @return Collection|World[]
-     */
-    public function getWorlds(): Collection
+    public function getWorld(): ?World
     {
-        return $this->worlds;
+        return $this->world;
     }
 
-    public function addWorld(World $world): self
+    public function setWorld(?World $world): self
     {
-        if (!$this->worlds->contains($world)) {
-            $this->worlds[] = $world;
-        }
-
-        return $this;
-    }
-
-    public function removeWorld(World $world): self
-    {
-        if ($this->worlds->contains($world)) {
-            $this->worlds->removeElement($world);
-        }
+        $this->world = $world;
 
         return $this;
     }

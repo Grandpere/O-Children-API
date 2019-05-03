@@ -39,14 +39,19 @@ class World
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Quizz", mappedBy="worlds")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Quizz", mappedBy="world")
      */
     private $quizzs;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Puzzle", mappedBy="worlds")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Puzzle", mappedBy="world")
      */
     private $puzzles;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
 
     public function __construct()
     {
@@ -160,6 +165,18 @@ class World
             $this->puzzles->removeElement($puzzle);
             $puzzle->removeWorld($this);
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
