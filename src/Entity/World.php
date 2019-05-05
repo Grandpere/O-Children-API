@@ -44,6 +44,7 @@ class World
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Quizz", mappedBy="world")
+     * @Groups({"world_get"})
      */
     private $quizzs;
 
