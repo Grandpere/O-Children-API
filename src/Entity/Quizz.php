@@ -34,6 +34,7 @@ class Quizz
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"world_get"})
      */
     private $description;
 

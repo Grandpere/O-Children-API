@@ -9,12 +9,12 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/api/world", name="api_world_")
+ * @Route(name="api_world_")
  */
 class WorldController extends AbstractController
 {
     /**
-     * @Route("/", name="get_All_World", methods={"GET"})
+     * @Route("/api/worlds", name="get_All_World", methods={"GET"})
      */
     public function read(WorldRepository $worldRepository, SerializerInterface $serializer)
     {
@@ -24,7 +24,7 @@ class WorldController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="get_One_World", methods={"GET"})
+     * @Route("/api/world/{id}", name="get_One_World", methods={"GET"})
      */
     public function readOne($id, WorldRepository $worldRepository, SerializerInterface $serializer)
     {
