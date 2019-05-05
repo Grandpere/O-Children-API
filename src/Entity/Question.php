@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
@@ -15,16 +16,19 @@ class Question
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"quizz_show"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Groups({"quizz_show"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"quizz_show"})
      */
     private $image;
 
@@ -40,11 +44,13 @@ class Question
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
+     * @Groups({"quizz_show"})
      */
     private $answers;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Answer", cascade={"persist", "remove"})
+     * @Groups({"quizz_show"})
      */
     private $right_answer;
 

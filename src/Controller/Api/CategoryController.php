@@ -19,7 +19,7 @@ class CategoryController extends AbstractController
     public function read(CategoryRepository $categoryRepository, SerializerInterface $serializer)
     {
         $categories = $categoryRepository->findAll();
-        $jsonCategories = $serializer->serialize($categories, 'json', ['groups' => 'category_get']);
+        $jsonCategories = $serializer->serialize($categories, 'json', ['groups' => 'category_list']);
         return JsonResponse::fromJsonString($jsonCategories);
     }
 
@@ -29,7 +29,7 @@ class CategoryController extends AbstractController
     public function readOne($id, CategoryRepository $categoryRepository, SerializerInterface $serializer)
     {
         $category = $categoryRepository->find($id);
-        $jsonCategory = $serializer->serialize($category, 'json', ['groups' => 'category_get']);
+        $jsonCategory = $serializer->serialize($category, 'json', ['groups' => 'category_show']);
         return JsonResponse::fromJsonString($jsonCategory);
     }
 }

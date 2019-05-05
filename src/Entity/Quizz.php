@@ -16,25 +16,25 @@ class Quizz
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"world_get"})
+     * @Groups({"world_show", "category_show", "quizz_list", "quizz_show"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
-     * @Groups({"world_get"})
+     * @Groups({"world_show", "category_show", "quizz_list", "quizz_show"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"world_get"})
+     * @Groups({"world_show", "category_show", "quizz_list", "quizz_show"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"world_get"})
+     * @Groups({"world_show", "category_show", "quizz_list", "quizz_show"})
      */
     private $description;
 
@@ -50,6 +50,7 @@ class Quizz
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="quizz")
+     * @Groups({"quizz_show"})
      */
     private $questions;
 

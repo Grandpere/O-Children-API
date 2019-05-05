@@ -16,19 +16,19 @@ class World
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"world_get"})
+     * @Groups({"world_list", "world_show"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"world_get"})
+     * @Groups({"world_list", "world_show"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"world_get"})
+     * @Groups({"world_list", "world_show"})
      */
     private $description;
 
@@ -44,7 +44,7 @@ class World
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Quizz", mappedBy="world")
-     * @Groups({"world_get"})
+     * @Groups({"world_show"})
      */
     private $quizzs;
 
@@ -55,7 +55,7 @@ class World
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"world_get"})
+     * @Groups({"world_list"})
      */
     private $image;
 
