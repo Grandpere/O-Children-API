@@ -2,7 +2,11 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\World;
+use Swagger\Annotations as SWG;
 use App\Repository\WorldRepository;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -15,6 +19,16 @@ class WorldController extends AbstractController
 {
     /**
      * @Route("/", name="get_All_World", methods={"GET"})
+     * @SWG\Response(
+     *  response=200,
+     *  description="Retourne la liste des mondes",
+     *  @SWG\Schema(
+     *      type="array",
+     *      @SWG\Items(ref=@Model(type=World::class, groups={"world_list"}))
+     *  )
+     * )
+     * @SWG\Tag(name="Worlds")
+     * @Security(name="Bearer")
      */
     public function read(WorldRepository $worldRepository, SerializerInterface $serializer)
     {
@@ -24,7 +38,30 @@ class WorldController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="get_One_World", methods={"GET"})
+     * @Route("/{id}", name="get_One_World", methods={"GET"}, requirements={"id"="\d+"})
+     * @SWG\Response(
+     *  response=200,
+     *  description="Retourne le monde ciblé dans l'URL",
+     *  @SWG\Schema(ref=@Model(type=World::class, groups={"world_show"})))
+     * )
+     * @SWG\Response(
+     *  response=404,
+     *  description="Monde non trouvé",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="404"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Monde non trouvé"
+ *          )
+     *  )
+     * )
+     * @SWG\Tag(name="Worlds")
+     * @Security(name="Bearer")
      */
     public function readOne($id, WorldRepository $worldRepository, SerializerInterface $serializer)
     {
