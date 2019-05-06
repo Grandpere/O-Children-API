@@ -73,7 +73,6 @@ class PuzzleController extends AbstractController
     {
         $puzzle = $puzzleRepository->find($id);
         if(!$puzzle) {
-            // return new JsonResponse(['data' => 123]); 
             return $this->json($data = ["code" => 404, "message" => "Puzzle non trouvé"], $status = 404);
         }
         $jsonPuzzle = $serializer->serialize($puzzle, 'json', ['groups' => 'puzzle_show']);

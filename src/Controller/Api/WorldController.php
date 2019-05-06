@@ -66,8 +66,7 @@ class WorldController extends AbstractController
     public function readOne($id, WorldRepository $worldRepository, SerializerInterface $serializer)
     {
         $world = $worldRepository->find($id);
-        if(!$world) {
-            // return new JsonResponse(['data' => 123]); 
+        if(!$world) { 
             return $this->json($data = ["code" => 404, "message" => "Monde non trouvé"], $status = 404);
         }
         $jsonWorld = $serializer->serialize($world, 'json', ['groups' => 'world_show']);

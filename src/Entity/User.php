@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -16,37 +17,44 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"user_list", "user_show"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user_list", "user_show"})
      */
     private $email;
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"user_show"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=150, unique=true)
+     * @Groups({"user_show"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
+     * @Groups({"user_show"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user_show"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"user_show"})
      */
     private $birthday;
 
@@ -68,11 +76,13 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Quizz")
+     * @Groups({"user_show"})
      */
     private $quizz_bookmarks;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Puzzle")
+     * @Groups({"user_show"})
      */
     private $puzzle_bookmarks;
 

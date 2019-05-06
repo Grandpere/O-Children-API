@@ -74,7 +74,6 @@ class CategoryController extends AbstractController
         $category = $categoryRepository->find($id);
 
         if(!$category) {
-            // return new JsonResponse(['data' => 123]); 
             return $this->json($data = ["code" => 404, "message" => "Catégorie non trouvée"], $status = 404);
         }
         $jsonCategory = $serializer->serialize($category, 'json', ['groups' => 'category_show']);

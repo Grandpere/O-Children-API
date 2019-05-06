@@ -73,7 +73,6 @@ class QuizzController extends AbstractController
     {
         $quizz = $quizzRepository->find($id);
         if(!$quizz) {
-            // return new JsonResponse(['data' => 123]); 
             return $this->json($data = ["code" => 404, "message" => "Quizz non trouvé"], $status = 404);
         }
         $jsonQuizz = $serializer->serialize($quizz, 'json', ['groups' => 'quizz_show']);
