@@ -9,12 +9,12 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route(name="api_category_")
+ * @Route("/api/categories", name="api_category_")
  */
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/api/categories", name="get_All_Categories", methods={"GET"})
+     * @Route("/", name="get_All_Categories", methods={"GET"})
      */
     public function read(CategoryRepository $categoryRepository, SerializerInterface $serializer)
     {
@@ -24,11 +24,16 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/api/category/{id}", name="get_One_Category", methods={"GET"})
+     * @Route("/{id}", name="get_One_Category", methods={"GET"})
      */
     public function readOne($id, CategoryRepository $categoryRepository, SerializerInterface $serializer)
     {
         $category = $categoryRepository->find($id);
+
+        if(!$category) {
+            // return new JsonResponse(['data' => 123]); 
+            return $this->json($data = ["code" => 404, "message" => "Catégorie non trouvée"], $status = 404);
+        }
         $jsonCategory = $serializer->serialize($category, 'json', ['groups' => 'category_show']);
         return JsonResponse::fromJsonString($jsonCategory);
     }

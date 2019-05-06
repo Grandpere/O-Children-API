@@ -9,12 +9,12 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route(name="api_quizz_")
+ * @Route("/api/quizzs", name="api_quizz_")
  */
 class QuizzController extends AbstractController
 {
     /**
-     * @Route("/api/quizzs", name="get_All_Quizzs", methods={"GET"})
+     * @Route("/", name="get_All_Quizzs", methods={"GET"})
      */
     public function read(QuizzRepository $quizzRepository, SerializerInterface $serializer)
     {
@@ -24,11 +24,15 @@ class QuizzController extends AbstractController
     }
 
     /**
-     * @Route("/api/quizz/{id}", name="get_One_Quizz", methods={"GET"})
+     * @Route("/{id}", name="get_One_Quizz", methods={"GET"})
      */
     public function readOne($id, QuizzRepository $quizzRepository, SerializerInterface $serializer)
     {
         $quizz = $quizzRepository->find($id);
+        if(!$quizz) {
+            // return new JsonResponse(['data' => 123]); 
+            return $this->json($data = ["code" => 404, "message" => "Quizz non trouvé"], $status = 404);
+        }
         $jsonQuizz = $serializer->serialize($quizz, 'json', ['groups' => 'quizz_show']);
         return JsonResponse::fromJsonString($jsonQuizz);
     }

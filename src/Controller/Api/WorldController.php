@@ -9,12 +9,12 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route(name="api_world_")
+ * @Route("/api/worlds", name="api_world_")
  */
 class WorldController extends AbstractController
 {
     /**
-     * @Route("/api/worlds", name="get_All_World", methods={"GET"})
+     * @Route("/", name="get_All_World", methods={"GET"})
      */
     public function read(WorldRepository $worldRepository, SerializerInterface $serializer)
     {
@@ -24,11 +24,15 @@ class WorldController extends AbstractController
     }
 
     /**
-     * @Route("/api/world/{id}", name="get_One_World", methods={"GET"})
+     * @Route("/{id}", name="get_One_World", methods={"GET"})
      */
     public function readOne($id, WorldRepository $worldRepository, SerializerInterface $serializer)
     {
         $world = $worldRepository->find($id);
+        if(!$world) {
+            // return new JsonResponse(['data' => 123]); 
+            return $this->json($data = ["code" => 404, "message" => "Monde non trouvé"], $status = 404);
+        }
         $jsonWorld = $serializer->serialize($world, 'json', ['groups' => 'world_show']);
         return JsonResponse::fromJsonString($jsonWorld);
     }
