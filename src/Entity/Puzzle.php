@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PuzzleRepository")
@@ -15,21 +16,25 @@ class Puzzle
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"world_show", "category_show", "puzzle_list", "puzzle_show"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Groups({"world_show", "category_show", "puzzle_list", "puzzle_show"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"world_show", "category_show", "puzzle_list", "puzzle_show"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"world_show", "category_show", "puzzle_list", "puzzle_show"})
      */
     private $description;
 
