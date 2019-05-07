@@ -22,7 +22,7 @@ class World
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"world_list", "world_show"})
+     * @Groups({"world_list", "world_show", "category_show"})
      */
     private $name;
 

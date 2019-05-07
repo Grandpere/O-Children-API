@@ -61,6 +61,7 @@ class Quizz
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\World", inversedBy="quizzs")
+     * @Groups({"category_show"})
      */
     private $world;
 
