@@ -30,7 +30,6 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user_show"})
      */
     private $password;
 
