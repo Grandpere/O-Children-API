@@ -37,13 +37,13 @@ class AppFixtures extends Fixture
         $world36 = new World();
         $world36->setName("3-6 ans");
         $world36->setDescription("Activités pour les 3 à 6 ans");
-        // $world36->setImage("");
+        $world36->setImage("bear.svg");
         $manager->persist($world36);
 
         $world710 = new World();
         $world710->setName("7-10 ans");
         $world710->setDescription("Activités pour les 7 à 10 ans");
-        // $world710->setImage("");
+        $world710->setImage("lego.svg");
         $manager->persist($world710);
 
         // CATEGORY
