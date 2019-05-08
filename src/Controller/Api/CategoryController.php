@@ -28,7 +28,6 @@ class CategoryController extends AbstractController
      *  )
      * )
      * @SWG\Tag(name="Categories")
-     * @Security(name="Bearer")
      */
     public function read(CategoryRepository $categoryRepository, SerializerInterface $serializer)
     {

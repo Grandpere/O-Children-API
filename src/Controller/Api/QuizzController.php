@@ -18,30 +18,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class QuizzController extends AbstractController
 {
     /**
-     * @Route("/", name="get_All_Quizzs", methods={"GET"})
-     * @SWG\Response(
-     *  response=200,
-     *  description="Retourne la liste des quizzs",
-     *  @SWG\Schema(
-     *      type="array",
-     *      @SWG\Items(ref=@Model(type=Quizz::class, groups={"quizz_list"}))
-     *  )
-     * )
-     * @SWG\Tag(name="Quizzs")
-     * @Security(name="Bearer")
-     */
-    public function read(QuizzRepository $quizzRepository, SerializerInterface $serializer)
-    {
-        $quizzs = $quizzRepository->findAll();
-        $jsonQuizzs = $serializer->serialize($quizzs, 'json', ['groups' => 'quizz_list']);
-        return JsonResponse::fromJsonString($jsonQuizzs);
-    }
-
-    /**
      * @Route("/{id}", name="get_One_Quizz", methods={"GET"}, requirements={"id"="\d+"})
      * @SWG\Response(
      *  response=200,
-     *  description="Retourne le quizz ciblé dans l'URL",
+     *  description="Retourne le quizz ciblé dans l'URL ainsi que ses questions, ses réponses et la bonne réponse",
      *  @SWG\Schema(ref=@Model(type=Quizz::class, groups={"quizz_show"})))
      * )
      * @SWG\Response(
@@ -67,7 +47,6 @@ class QuizzController extends AbstractController
      *     description="L'identifiant du quizz"
      * )
      * @SWG\Tag(name="Quizzs")
-     * @Security(name="Bearer")
      */
     public function readOne($id, QuizzRepository $quizzRepository, SerializerInterface $serializer)
     {

@@ -28,7 +28,6 @@ class PuzzleController extends AbstractController
      *  )
      * )
      * @SWG\Tag(name="Puzzles")
-     * @Security(name="Bearer")
      */
     public function read(PuzzleRepository $puzzleRepository, SerializerInterface $serializer)
     {
@@ -67,7 +66,6 @@ class PuzzleController extends AbstractController
      *     description="L'identifiant du puzzle"
      * )
      * @SWG\Tag(name="Puzzles")
-     * @Security(name="Bearer")
      */
     public function readOne($id, PuzzleRepository $puzzleRepository, SerializerInterface $serializer)
     {

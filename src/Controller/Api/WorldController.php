@@ -28,7 +28,6 @@ class WorldController extends AbstractController
      *  )
      * )
      * @SWG\Tag(name="Worlds")
-     * @Security(name="Bearer")
      */
     public function read(WorldRepository $worldRepository, SerializerInterface $serializer)
     {
