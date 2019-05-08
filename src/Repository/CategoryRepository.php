@@ -47,4 +47,15 @@ class CategoryRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function allQuizzs($category)
+    {
+        $query = $this->createQueryBuilder('c')
+                        ->innerJoin('c.quizzs', 'q')
+                        ->addSelect('q')
+                        ->andWhere('c.id = :category')
+                        ->setParameter('category', $category)
+                        ->orderBy('q.id', 'ASC');
+        return $query->getQuery()->getResult();
+    }
 }

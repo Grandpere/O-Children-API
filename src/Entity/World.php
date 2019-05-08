@@ -16,21 +16,27 @@ class World
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"world_list"})
+     * @Groups({"world_list", "world_get_quizz"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"world_list", "category_show"})
+     * @Groups({"world_list", "world_get_quizz"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"world_list"})
+     * @Groups({"world_list", "world_get_quizz"})
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"world_list", "world_get_quizz"})
+     */
+    private $image;
 
     /**
      * @ORM\Column(type="datetime")
@@ -52,12 +58,6 @@ class World
      * @ORM\OneToMany(targetEntity="App\Entity\Puzzle", mappedBy="world")
      */
     private $puzzles;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"world_list"})
-     */
-    private $image;
 
     public function __construct()
     {

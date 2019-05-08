@@ -38,11 +38,11 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="get_One_Category", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/{id}/quizzs", name="get_quizzs", methods={"GET"}, requirements={"id"="\d+"})
      * @SWG\Response(
      *  response=200,
-     *  description="Retourne la catégorie ciblée dans l'URL",
-     *  @SWG\Schema(ref=@Model(type=Category::class, groups={"category_show"})))
+     *  description="Retourne tous les quizzs de la catégorie ciblée dans l'URL",
+     *  @SWG\Schema(ref=@Model(type=Category::class, groups={"category_get_quizz"})))
      * )
      * @SWG\Response(
      *  response=404,
@@ -60,23 +60,15 @@ class CategoryController extends AbstractController
  *          )
      *  )
      * )
-     * @SWG\Parameter(
-     *     name="id",
-     *     in="path",
-     *     type="integer",
-     *     description="L'identifiant de la catégorie"
-     * )
      * @SWG\Tag(name="Categories")
-     * @Security(name="Bearer")
      */
-    public function readOne($id, CategoryRepository $categoryRepository, SerializerInterface $serializer)
+    public function getActivities($id, CategoryRepository $categoryRepository, SerializerInterface $serializer)
     {
-        $category = $categoryRepository->find($id);
-
-        if(!$category) {
+        $world = $categoryRepository->allQuizzs($id);
+        if(!$world) { 
             return $this->json($data = ["code" => 404, "message" => "Catégorie non trouvée"], $status = 404);
         }
-        $jsonCategory = $serializer->serialize($category, 'json', ['groups' => 'category_show']);
-        return JsonResponse::fromJsonString($jsonCategory);
+        $jsonWorld = $serializer->serialize($world, 'json', ['groups' => 'category_get_quizz']);
+        return JsonResponse::fromJsonString($jsonWorld);
     }
 }
