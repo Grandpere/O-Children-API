@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Swagger\Annotations as SWG;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,7 +12,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/api/login", name="app_login", methods={"POST"})
+     * @Route("/login", name="app_login", methods={"POST"})
      */
     public function login(Request $request)
     {
@@ -32,4 +33,6 @@ class SecurityController extends AbstractController
 
     //     return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     // }
+
+    // https://www.franciscougalde.com/2018/02/19/construir-restful-api-symfony-4-jwt-parte-3/
 }
