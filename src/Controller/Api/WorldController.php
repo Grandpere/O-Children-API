@@ -38,11 +38,11 @@ class WorldController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="get_One_World", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/{id}/quizzs", name="get_quizzs", methods={"GET"}, requirements={"id"="\d+"})
      * @SWG\Response(
      *  response=200,
-     *  description="Retourne le monde ciblé dans l'URL",
-     *  @SWG\Schema(ref=@Model(type=World::class, groups={"world_show"})))
+     *  description="Retourne tous les quizzs du monde ciblé dans l'URL",
+     *  @SWG\Schema(ref=@Model(type=World::class, groups={"world_get_quizz"})))
      * )
      * @SWG\Response(
      *  response=404,
@@ -61,15 +61,14 @@ class WorldController extends AbstractController
      *  )
      * )
      * @SWG\Tag(name="Worlds")
-     * @Security(name="Bearer")
      */
-    public function readOne($id, WorldRepository $worldRepository, SerializerInterface $serializer)
+    public function getActivities($id, WorldRepository $worldRepository, SerializerInterface $serializer)
     {
-        $world = $worldRepository->find($id);
+        $world = $worldRepository->allQuizzs($id);
         if(!$world) { 
             return $this->json($data = ["code" => 404, "message" => "Monde non trouvé"], $status = 404);
         }
-        $jsonWorld = $serializer->serialize($world, 'json', ['groups' => 'world_show']);
+        $jsonWorld = $serializer->serialize($world, 'json', ['groups' => 'world_get_quizz']);
         return JsonResponse::fromJsonString($jsonWorld);
     }
 }

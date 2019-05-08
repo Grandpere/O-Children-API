@@ -47,4 +47,15 @@ class WorldRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function allQuizzs($world)
+    {
+        $query = $this->createQueryBuilder('w')
+                        ->innerJoin('w.quizzs', 'q')
+                        ->addSelect('q')
+                        ->andWhere('w.id = :world')
+                        ->setParameter('world', $world)
+                        ->orderBy('q.id', 'ASC');
+        return $query->getQuery()->getResult();
+    }
 }
