@@ -18,26 +18,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/", name="get_All_Users", methods={"GET"})
-     * @SWG\Response(
-     *  response=200,
-     *  description="Retourne la liste des users",
-     *  @SWG\Schema(
-     *      type="array",
-     *      @SWG\Items(ref=@Model(type=User::class, groups={"user_list"}))
-     *  )
-     * )
-     * @SWG\Tag(name="Users")
-     * @Security(name="Bearer")
-     */
-    public function read(UserRepository $userRepository, SerializerInterface $serializer)
-    {
-        $users = $userRepository->findAll();
-        $jsonUsers = $serializer->serialize($users, 'json', ['groups' => 'user_list']);
-        return JsonResponse::fromJsonString($jsonUsers);
-    }
-
-    /**
      * @Route("/{id}", name="get_One_User", methods={"GET"}, requirements={"id"="\d+"})
      * @SWG\Response(
      *  response=200,
