@@ -81,9 +81,6 @@ class RegistrationController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        // $jsonUser = $serializer->serialize($user, 'json', ['groups' => 'user_show']);
-        // return JsonResponse::fromJsonString($jsonUser);
-
         return $this->json($data = ["code" => 201, "message" => "Inscription validée avec succès", "id" => $user->getId()], $status = 201);
     }
 }
