@@ -4,9 +4,12 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use Swagger\Annotations as SWG;
+use App\Form\RegistrationFormType;
+use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;

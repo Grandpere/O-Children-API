@@ -33,6 +33,9 @@ class User implements UserInterface
      */
     private $password;
 
+    private $plainpassword;
+    private $plainpassword2;
+
     /**
      * @ORM\Column(type="string", length=150, unique=true)
      * @Groups({"user_show"})
@@ -367,6 +370,46 @@ class User implements UserInterface
                 $makePuzzle->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of plainpassword2
+     */ 
+    public function getPlainpassword2()
+    {
+        return $this->plainpassword2;
+    }
+
+    /**
+     * Set the value of plainpassword2
+     *
+     * @return  self
+     */ 
+    public function setPlainpassword2($plainpassword2)
+    {
+        $this->plainpassword2 = $plainpassword2;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of plainpassword
+     */ 
+    public function getPlainpassword()
+    {
+        return $this->plainpassword;
+    }
+
+    /**
+     * Set the value of plainpassword
+     *
+     * @return  self
+     */ 
+    public function setPlainpassword($plainpassword)
+    {
+        $this->plainpassword = $plainpassword;
 
         return $this;
     }

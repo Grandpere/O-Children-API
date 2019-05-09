@@ -14,15 +14,15 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login", methods={"POST"})
      */
-    public function login(Request $request)
-    {
-        $user = $this->getUser();
-
-        return $this->json([
-            'username' => $user->getUsername(),
-            'roles' => $user->getRoles(),
-        ]);
-    }
+    // public function login(Request $request)
+    // {
+    //     $user = $this->getUser();
+        
+    //     return $this->json([
+    //         'username' => $user->getUsername(),
+    //         'roles' => $user->getRoles(),
+    //     ]);
+    // }
 
     // public function login(AuthenticationUtils $authenticationUtils): Response
     // {
@@ -33,6 +33,4 @@ class SecurityController extends AbstractController
 
     //     return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     // }
-
-    // https://www.franciscougalde.com/2018/02/19/construir-restful-api-symfony-4-jwt-parte-3/
 }
