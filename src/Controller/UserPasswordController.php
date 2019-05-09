@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\UserRepository;
+use App\Utils\MailGenerator;
 
 class UserPasswordController extends AbstractController
 {
@@ -19,7 +20,7 @@ class UserPasswordController extends AbstractController
      * )
      * @SWG\Tag(name="Users")
      */
-    public function newPassword(Request $request, UserRepository $userRepository, PasswordGenerator $pwdGenerator) {
+    public function newPassword(Request $request, UserRepository $userRepository, PasswordGenerator $pwdGenerator, MailGenerator $mailGenerator) {
         $content = $request->getContent();
         $jsonObj = json_decode($content);
         $email = $jsonObj->email;
@@ -31,10 +32,9 @@ class UserPasswordController extends AbstractController
         }
         $user->setPassword($pwdGenerator->generate());
         $user->setUpdatedAt(new \DateTime());
-        // $mailGenerator->resetPassword($user);
+        $mailGenerator->resetPassword($user);
         $em = $this->getDoctrine()->getManager();
         $em->flush();
-        dd($user);
         return $this->json($data = ["code" => 200, "message" => "Mot de passe envoyé"], $status = 200);       
     }
 }
