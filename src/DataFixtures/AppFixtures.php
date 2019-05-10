@@ -50,19 +50,19 @@ class AppFixtures extends Fixture
         $catSpace = new Category();
         $catSpace->setName("Espace");
         $catSpace->setDescription("Ici retrouvez les activités sur le thème de l'espace");
-        // $catSpace->setImage("");
+        $catSpace->setImage("espace.svg");
         $manager->persist($catSpace);
 
         $catScience = new Category();
         $catScience->setName("Science");
         $catScience->setDescription("Ici retrouvez les activités sur le thème de la science");
-        // $catScience->setImage("");
+        $catScience->setImage("science.svg");
         $manager->persist($catScience);
 
         $catNature = new Category();
         $catNature->setName("Nature");
         $catNature->setDescription("Ici retrouvez les activités sur le thème de la nature");
-        // $catNature->setImage("");
+        $catNature->setImage("nature.svg");
         $manager->persist($catNature);
 
         // USER

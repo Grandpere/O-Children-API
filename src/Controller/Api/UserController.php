@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use PhpParser\Node\Stmt\TryCatch;
 
 /**
  * @Route("/api/users", name="api_user_")
@@ -58,5 +59,43 @@ class UserController extends AbstractController
         }
         $jsonUser = $serializer->serialize($user, 'json', ['groups' => 'user_show']);
         return JsonResponse::fromJsonString($jsonUser);
+    }
+
+    /**
+     * @Route("/{id}/password/update", name="updatePwd", methods={"POST"}, requirements={"id"="\d+"})
+     */
+    public function updatePassword($id, Request $request, SerializerInterface $serializer, UserRepository $userRepository)
+    {
+        $user = $userRepository->find($id);
+        if(!$user) {
+            return $this->json($data = ["code" => 404, "message" => "Utilisateur non trouvé"], $status = 404);
+        }
+        $content = $request->getContent();
+        $jsonObj = json_decode($content);
+
+        try {
+            $actualPwd = $jsonObj->password;
+            $newPwd1 = $jsonObj->plainpassword;
+            $newPwd2 = $jsonObj->plainpassword2;
+        } catch (\Throwable $th) {
+            return $this->json($data = ["code" => 400, "message" => "Le formulaire doit contenir les champs dont le name est password, plainpassword et plainpassword2"], $status = 400); 
+        }        
+
+        if(empty($actualPwd)) {
+            return $this->json($data = ["code" => 403, "message" => "Vous devez confirmer votre mot de passe actuel pour modifier le mot de passe"], $status = 403); 
+        }
+
+        if($newPwd1 != $newPwd2) {
+            return $this->json($data = ["code" => 418, "message" => "I'm a teapot, les deux nouveaux mot de passe ne sont pas identiques"], $status = 418); 
+        }
+
+        if(password_verify($actualPwd, $user->getPassword())) {
+            $user->setPassword($newPwd1);
+            $user->setUpdatedAt(new \DateTime());
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->json($data = ["code" => 200, "message" => "Le mot de passe a été modifié"], $status = 200);  
+        }
+        return $this->json($data = ["code" => 403, "message" => "Le mot de passe actuel est incorrect"], $status = 403);  
     }
 }
