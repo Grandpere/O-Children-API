@@ -17,11 +17,9 @@ class MailGenerator
     public function resetPassword($user)
     {
         $message = (new \Swift_Message('Ochildren - Ton nouveau mot de passe'))
-            ->setFrom('lorenzo.marozzo@gmail.com')
-            // ->setTo($user->getEmail())
-            ->setTo('lorenzo.marozzo@gmail.com')
-            ->setBody('<h1>coucou</h1>');
-            // ->setBody($this->twig->render('mailing/resetpassword.html.twig', ['user' => $user]), 'text/html');
+            ->setFrom('contact@ochildren.com')
+            ->setTo($user->getEmail())
+            ->setBody($this->twig->render('mailing/reset_password.html.twig', ['user' => $user]), 'text/html');
         return $this->mailer->send($message);
     }
 }
