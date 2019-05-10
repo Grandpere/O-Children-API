@@ -23,10 +23,13 @@ class UserPasswordController extends AbstractController
     public function newPassword(Request $request, UserRepository $userRepository, PasswordGenerator $pwdGenerator, MailGenerator $mailGenerator) {
         $content = $request->getContent();
         $jsonObj = json_decode($content);
-        $email = $jsonObj->email;
+        try {
+            $email = $jsonObj->email;
+        } catch (\Throwable $th) {
+            return $this->json($data = ["code" => 400, "message" => "Le formulaire doit contenir un champ dont le name est email"], $status = 400); 
+        } 
 
         $user = $userRepository->findOneByEmail($email);
-
         if (!$user) {
             return $this->json($data = ["code" => 404, "message" => "Utilisateur non trouvé"], $status = 404);
         }
