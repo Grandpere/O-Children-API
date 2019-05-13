@@ -37,6 +37,47 @@ class CategoryController extends AbstractController
     }
 
     /**
+     *  @Route("/{id}", name="get_One_Category", methods={"GET"}, requirements={"id"="\d+"})
+     *  @SWG\Response(
+     *  response=200,
+     *  description="Retourne la catégorie ciblée dans l'URL",
+     *  @SWG\Schema(ref=@Model(type=Category::class, groups={"category_show"})))
+     * )
+     * @SWG\Response(
+     *  response=404,
+     *  description="Catégorie non trouvée",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+     *              property="code",
+     *              type="integer",
+     *              example="404"
+     *          ),
+     *          @SWG\Property(
+     *              property="message",
+     *              type="string",
+     *              example="Catégorie non trouvée"
+     *          )
+     *  )
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     description="L'identifiant de la catégorie"
+     * )
+     * @SWG\Tag(name="Categories")
+     */
+    public function readOne($id, CategoryRepository $categoryRepository, SerializerInterface $serializer)
+    {
+        $category = $categoryRepository->find($id);
+        if (!$category) {
+            return $this->json($data = ["code" => 404, "message" => "Catégorie non trouvée"], $status = 404);
+        }
+        $jsonCategory = $serializer->serialize($category, 'json', ['groups' => 'category_show']);
+        return JsonResponse::fromJsonString($jsonCategory);
+    }
+
+    /**
      * @Route("/{id}/quizzs", name="get_quizzs", methods={"GET"}, requirements={"id"="\d+"})
      * @SWG\Response(
      *  response=200,

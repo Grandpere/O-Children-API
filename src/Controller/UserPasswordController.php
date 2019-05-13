@@ -18,6 +18,7 @@ class UserPasswordController extends AbstractController
      *  response=200,
      *  description="Mail envoyé avec le nouveau mot de passe"
      * )
+     * // TODO: doc à faire
      * @SWG\Tag(name="Users")
      */
     public function newPassword(Request $request, UserRepository $userRepository, PasswordGenerator $pwdGenerator, MailGenerator $mailGenerator) {
@@ -38,6 +39,7 @@ class UserPasswordController extends AbstractController
         $mailGenerator->resetPassword($user);
         $em = $this->getDoctrine()->getManager();
         $em->flush();
-        return $this->json($data = ["code" => 200, "message" => "Mot de passe envoyé"], $status = 200);       
+        return $this->json($data = ["code" => 200, "message" => "Mot de passe envoyé"], $status = 200);    
+        // TODO: voir pour optimiser cela car un autre user peut réinitialiser le pwd d'un autre, il n'y aura pas accès sauf s'il a accès à la boite mail de l'user, il faut faire un controle donc décaler la réinitialisation du password (cf mail activation account prévu)   
     }
 }

@@ -63,6 +63,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/password/update", name="updatePwd", methods={"POST"}, requirements={"id"="\d+"})
+     * // TODO: doc à faire
      */
     public function updatePassword($id, Request $request, SerializerInterface $serializer, UserRepository $userRepository)
     {
