@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Puzzle{% endblock %}
+
+{% block body %}
+    <h1>Edit Puzzle</h1>
+
+    {{ include('admin/puzzle/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('admin_puzzle_index') }}">back to list</a>
+
+    {{ include('admin/puzzle/_delete_form.html.twig') }}
+{% endblock %}
