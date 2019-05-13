@@ -29,6 +29,7 @@
                 <td>
                     <a href="{{ path('admin_quizz_show', {'id': quizz.id}) }}">show</a>
                     <a href="{{ path('admin_quizz_edit', {'id': quizz.id}) }}">edit</a>
+                    <a href="{{ path('admin_question_index', {'id': quizz.id}) }}">manage questions</a>
                 </td>
             </tr>
         {% else %}

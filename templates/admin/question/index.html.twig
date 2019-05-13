@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Question index{% endblock %}
+{% block title %}Question index of quizz {{ quizz.title }}{% endblock %}
 
 {% block body %}
-    <h1>Question index</h1>
+    <h1>Question index of quizz {{ quizz.title }}</h1>
 
     <table class="table">
         <thead>
@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for question in questions %}
+        {% for question in quizz.questions %}
             <tr>
                 <td>{{ question.id }}</td>
                 <td>{{ question.content }}</td>
@@ -25,8 +25,8 @@
                 <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_question_show', {'id': question.id}) }}">show</a>
-                    <a href="{{ path('admin_question_edit', {'id': question.id}) }}">edit</a>
+                    <a href="{{ path('admin_question_show', {'id': quizz.id, 'questionId': question.id}) }}">show</a>
+                    <a href="{{ path('admin_question_edit', {'id': quizz.id, 'questionId': question.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_question_new') }}">Create new</a>
+    <a href="{{ path('admin_question_new', {'id': quizz.id}) }}">Create new</a>
 {% endblock %}

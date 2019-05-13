@@ -7,5 +7,5 @@
 
     {{ include('admin/question/_form.html.twig') }}
 
-    <a href="{{ path('admin_question_index') }}">back to list</a>
+    <a href="{{ path('admin_question_index', {'id': quizz.id}) }}">back to list</a>
 {% endblock %}
