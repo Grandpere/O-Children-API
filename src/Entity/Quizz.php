@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuizzRepository")
@@ -23,6 +24,7 @@ class Quizz
     /**
      * @ORM\Column(type="string", length=150)
      * @Groups({"world_get_quizz", "category_get_quizz", "quizz_show"})
+     * @Assert\NotBlank
      */
     private $title;
 

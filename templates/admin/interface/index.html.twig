@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello InterfaceController!{% endblock %}
+{% block title %}Ochildren Administration{% endblock %}
 
 {% block body %}
 <a class="nav-item nav-link"  href="{{ path('admin_world_index') }}"> 
@@ -9,7 +9,17 @@
 <a class="nav-item nav-link"  href="{{ path('admin_category_index') }}"> 
     Gestion des catégories 
 </a>
+<a class="nav-item nav-link"  href="{{ path('admin_quizz_index') }}"> 
+    Gestion des Quizzs 
+</a>
 <a class="nav-item nav-link"  href="{{ path('admin_puzzle_index') }}"> 
     Gestion des puzzles 
+</a>
+A virer après 
+<a class="nav-item nav-link"  href="{{ path('admin_question_index') }}"> 
+    Gestion des questions 
+</a>
+<a class="nav-item nav-link"  href="{{ path('admin_answer_index') }}"> 
+    Gestion des réponses 
 </a>
 {% endblock %}
