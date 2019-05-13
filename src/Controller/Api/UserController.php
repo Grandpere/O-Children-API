@@ -63,6 +63,11 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/password/update", name="updatePwd", methods={"POST"}, requirements={"id"="\d+"})
+     * @SWG\Response(
+     *  response=200,
+     *  description="Mot de passe modifié avec succès",
+     * )
+     * @SWG\Tag(name="Users")
      * // TODO: doc à faire
      */
     public function updatePassword($id, Request $request, SerializerInterface $serializer, UserRepository $userRepository)
