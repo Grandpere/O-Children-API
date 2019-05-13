@@ -15,10 +15,6 @@ class CategoryType extends AbstractType
             ->add('name')
             ->add('image')
             ->add('description')
-            ->add('created_at')
-            ->add('updated_at')
-            ->add('quizzs')
-            ->add('puzzles')
         ;
     }
 

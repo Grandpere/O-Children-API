@@ -12,6 +12,8 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Image</th>
+                <th>Created_at</th>
+                <th>Updated_at</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +24,8 @@
                 <td>{{ world.name }}</td>
                 <td>{{ world.description }}</td>
                 <td>{{ world.image }}</td>
+                <td>{{ world.createdAt ? world.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ world.updatedAt ? world.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('admin_world_show', {'id': world.id}) }}">show</a>
                     <a href="{{ path('admin_world_edit', {'id': world.id}) }}">edit</a>
