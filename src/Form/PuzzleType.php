@@ -15,6 +15,15 @@ class PuzzleType extends AbstractType
             ->add('title')
             ->add('image')
             ->add('description')
+            ->add('world', null, [
+                'choice_label' => 'name',
+                'expanded' => true,
+            ])
+            ->add('categories', null, [
+                'choice_label' => 'name',
+                'expanded' => true,
+                'multiple' => true,
+            ])
         ;
     }
 

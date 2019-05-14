@@ -31,6 +31,18 @@
                 <th>Updated_at</th>
                 <td>{{ puzzle.updatedAt ? puzzle.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+            <tr>
+                <th>World</th>
+                <td>{{ puzzle.world.name }}</td>
+            </tr>
+            <tr>
+                <th>Categories</th>
+                <td>
+                {% for categorie in puzzle.categories %}
+                    {{ categorie.name }}{% if puzzle.categories|length>1 %}, {% endif %}                  
+                {% endfor %}
+                </td>
+            </tr>
         </tbody>
     </table>
 

@@ -14,6 +14,8 @@
                 <th>Description</th>
                 <th>Created_at</th>
                 <th>Updated_at</th>
+                <th>World</th>
+                <th>Catégories</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -26,6 +28,12 @@
                 <td>{{ quizz.description }}</td>
                 <td>{{ quizz.createdAt ? quizz.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ quizz.updatedAt ? quizz.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ quizz.world.name }}</td>
+                <td>
+                {% for categorie in quizz.categories %}
+                    {{ categorie.name }}{% if quizz.categories|length>1 %}, {% endif %}                  
+                {% endfor %}
+                </td>
                 <td>
                     <a href="{{ path('admin_quizz_show', {'id': quizz.id}) }}">show</a>
                     <a href="{{ path('admin_quizz_edit', {'id': quizz.id}) }}">edit</a>

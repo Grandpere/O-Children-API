@@ -14,6 +14,8 @@
                 <th>Description</th>
                 <th>Created_at</th>
                 <th>Updated_at</th>
+                <th>World</th>
+                <th>Catégories</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -26,6 +28,12 @@
                 <td>{{ puzzle.description }}</td>
                 <td>{{ puzzle.createdAt ? puzzle.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ puzzle.updatedAt ? puzzle.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ puzzle.world.name }}</td>
+                <td>
+                {% for categorie in puzzle.categories %}
+                    {{ categorie.name }}{% if puzzle.categories|length>1 %}, {% endif %}                  
+                {% endfor %}
+                </td>
                 <td>
                     <a href="{{ path('admin_puzzle_show', {'id': puzzle.id}) }}">show</a>
                     <a href="{{ path('admin_puzzle_edit', {'id': puzzle.id}) }}">edit</a>
