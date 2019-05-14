@@ -6,6 +6,7 @@ use App\Entity\Quizz;
 use App\Entity\Question;
 use App\Form\QuestionType;
 use App\Repository\QuizzRepository;
+use App\Repository\AnswerRepository;
 use App\Repository\QuestionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -112,5 +113,30 @@ class QuestionController extends AbstractController
         return $this->redirectToRoute('admin_question_index', [
             'id' => $question->getQuizz()->getId(),
             ]);
+    }
+
+    /**
+     * @Route("/{id}/questions/{questionId}/answers/{answerId}/right", name="right", methods={"POST"}, requirements={"id"="\d+", "questionId"="\d+", "answerId"="\d+"})
+     */
+    public function right(Request $request, $questionId, $answerId, QuestionRepository $questionRepository, AnswerRepository $answerRepository) : Response
+    {
+        $question = $questionRepository->find($questionId);
+        if(!$question) {
+            throw $this->createNotFoundException('Question introuvable');
+        }
+        $answer = $answerRepository->find($answerId);
+        if(!$answer) {
+            throw $this->createNotFoundException('Réponse introuvable');
+        }
+        if ($this->isCsrfTokenValid('right'.$question->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $question->setRightAnswer($answer);
+            $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Enregistrement effectué'
+        );
+        }
+        return $this->redirectToRoute('admin_answer_index', ['id'=> $question->getId()]);
     }
 }

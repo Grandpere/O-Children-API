@@ -27,7 +27,10 @@
                 <td>
                     <a href="{{ path('admin_answer_show', {'id': question.id, 'answerId': answer.id}) }}">show</a>
                     <a href="{{ path('admin_answer_edit', {'id': question.id, 'answerId': answer.id}) }}">edit</a>
-                    <a href="">Mark as right answer</a>
+                    <form class="form-inline" action="{{ path('admin_question_right', {'id': question.quizz.id, 'questionId':question.id, 'answerId':answer.id }) }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token('right' ~ question.id) }}">
+                        <button class="btn text-dark" type="submit"><i class="fas fa-check"></i>Mark as right answer</button>
+                    </form>
                 </td>
             </tr>
         {% else %}
