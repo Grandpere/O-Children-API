@@ -3,16 +3,18 @@
 {% block title %}Ochildren Administration{% endblock %}
 
 {% block body %}
-<a class="nav-item nav-link"  href="{{ path('admin_world_index') }}"> 
+{% if is_granted('ROLE_ADMIN') %}
+<a class="nav-item nav-link" href="{{ path('admin_world_index') }}"> 
     Gestion des mondes 
 </a>
-<a class="nav-item nav-link"  href="{{ path('admin_category_index') }}"> 
+<a class="nav-item nav-link" href="{{ path('admin_category_index') }}"> 
     Gestion des catégories 
 </a>
-<a class="nav-item nav-link"  href="{{ path('admin_quizz_index') }}"> 
+<a class="nav-item nav-link" href="{{ path('admin_quizz_index') }}"> 
     Gestion des Quizzs 
 </a>
-<a class="nav-item nav-link"  href="{{ path('admin_puzzle_index') }}"> 
+<a class="nav-item nav-link" href="{{ path('admin_puzzle_index') }}"> 
     Gestion des puzzles 
 </a>
+{% endif %}
 {% endblock %}

@@ -23,12 +23,10 @@ security:
             pattern:  ^/api/token/refresh
             stateless: true
             anonymous: true
-
         api_doc:
             pattern: ^/api/doc
             stateless: true
             anonymous: true
-
         api:
             pattern:   ^/api/users
             stateless: true
@@ -43,7 +41,11 @@ security:
             guard:
                 authenticators:
                     # - App\Security\LoginFormAuthenticator
-                    - App\Security\TokenAuthenticator
+                    # - App\Security\TokenAuthenticator
+                    - App\Security\BackendAuthenticator
+            logout:
+                path:   app_logout
+                target: admin_login
 
             # activate different ways to authenticate
 
@@ -61,3 +63,5 @@ security:
         - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users,       roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
