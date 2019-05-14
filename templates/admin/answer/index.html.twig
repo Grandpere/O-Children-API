@@ -3,7 +3,7 @@
 {% block title %}Answer index{% endblock %}
 
 {% block body %}
-    <h1>Answer index</h1>
+    <h1>Answer index of Question {{ question.content }} </h1>
 
     <table class="table">
         <thead>
@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for answer in answers %}
+        {% for answer in question.answers %}
             <tr>
                 <td>{{ answer.id }}</td>
                 <td>{{ answer.content }}</td>
@@ -25,8 +25,8 @@
                 <td>{{ answer.createdAt ? answer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ answer.updatedAt ? answer.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_answer_show', {'id': answer.id}) }}">show</a>
-                    <a href="{{ path('admin_answer_edit', {'id': answer.id}) }}">edit</a>
+                    <a href="{{ path('admin_answer_show', {'id': question.id, 'answerId': answer.id}) }}">show</a>
+                    <a href="{{ path('admin_answer_edit', {'id': question.id, 'answerId': answer.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_answer_new') }}">Create new</a>
+    <a href="{{ path('admin_answer_new', {'id': question.id}) }}">Create new</a>
+    <a href="{{ path('admin_question_index', {'id': question.quizz.id}) }}">back to question list</a>
 {% endblock %}

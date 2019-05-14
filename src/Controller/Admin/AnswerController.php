@@ -3,66 +3,84 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Answer;
+use App\Entity\Question;
 use App\Form\AnswerType;
 use App\Repository\AnswerRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/admin/answer", name="admin_answer_")
+ * @Route("/admin/questions", name="admin_answer_")
  */
 class AnswerController extends AbstractController
 {
     /**
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/{id}/answers", name="index", methods={"GET"})
      */
-    public function index(AnswerRepository $answerRepository): Response
+    public function index(Question $question = null): Response
     {
+        if(!$question)
+        {
+            throw $this->createNotFoundException('Question introuvable');
+        }
         return $this->render('admin/answer/index.html.twig', [
-            'answers' => $answerRepository->findAll(),
+            'question' => $question,
         ]);
     }
 
     /**
-     * @Route("/new", name="new", methods={"GET","POST"})
+     * @Route("/{id}/answers/new", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Question $question = null): Response
     {
+        if(!$question) {
+            throw $this->createNotFoundException('Question introuvable');
+        }
         $answer = new Answer();
         $form = $this->createForm(AnswerType::class, $answer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $answer->setQuestion($question);
             $entityManager->persist($answer);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_answer_index');
+            return $this->redirectToRoute('admin_answer_index', ['id'=> $question->getId()]);
         }
 
         return $this->render('admin/answer/new.html.twig', [
+            'question' => $question,
             'answer' => $answer,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="show", methods={"GET"})
+     * @Route("/{id}/answers/{answerId}", name="show", methods={"GET"})
      */
-    public function show(Answer $answer): Response
+    public function show($answerId, AnswerRepository $answerRepository): Response
     {
+        $answer = $answerRepository->find($answerId);
+        if(!$answer) {
+            throw $this->createNotFoundException('Réponse introuvable');
+        }
         return $this->render('admin/answer/show.html.twig', [
             'answer' => $answer,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+     * @Route("/{id}/answers/{answerId}/edit", name="edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Answer $answer): Response
+    public function edit(Request $request, $answerId, AnswerRepository $answerRepository): Response
     {
+        $answer = $answerRepository->find($answerId);
+        if(!$answer) {
+            throw $this->createNotFoundException('Réponse introuvable');
+        }
         $form = $this->createForm(AnswerType::class, $answer);
         $form->handleRequest($request);
 
@@ -70,7 +88,7 @@ class AnswerController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_answer_index', [
-                'id' => $answer->getId(),
+                'id' => $answer->getQuestion()->getId(),
             ]);
         }
 
@@ -91,6 +109,8 @@ class AnswerController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin_answer_index');
+        return $this->redirectToRoute('admin_answer_index', [
+            'id' => $answer->getQuestion()->getId(),
+            ]);
     }
 }

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/quizz", name="admin_quizz_")
+ * @Route("/admin/quizzs", name="admin_quizz_")
  */
 class QuizzController extends AbstractController
 {

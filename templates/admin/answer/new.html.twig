@@ -7,5 +7,5 @@
 
     {{ include('admin/answer/_form.html.twig') }}
 
-    <a href="{{ path('admin_answer_index') }}">back to list</a>
+    <a href="{{ path('admin_answer_index', {'id': question.id}) }}">back to list</a>
 {% endblock %}

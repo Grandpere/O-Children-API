@@ -27,6 +27,7 @@
                 <td>
                     <a href="{{ path('admin_question_show', {'id': quizz.id, 'questionId': question.id}) }}">show</a>
                     <a href="{{ path('admin_question_edit', {'id': quizz.id, 'questionId': question.id}) }}">edit</a>
+                    <a href="{{ path('admin_answer_index', {'id': question.id}) }}">manage answers</a>
                 </td>
             </tr>
         {% else %}
@@ -36,6 +37,6 @@
         {% endfor %}
         </tbody>
     </table>
-
     <a href="{{ path('admin_question_new', {'id': quizz.id}) }}">Create new</a>
+    <a href="{{ path('admin_quizz_index') }}">back to quizz list</a>
 {% endblock %}

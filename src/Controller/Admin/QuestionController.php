@@ -13,22 +13,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/admin/quizz", name="admin_question_")
+ * @Route("/admin/quizzs", name="admin_question_")
  */
 class QuestionController extends AbstractController
 {
     /**
      * @Route("/{id}/questions", name="index", methods={"GET"})
      */
-    public function index(Quizz $quizz = null, QuestionRepository $questionRepository): Response
+    public function index(Quizz $quizz = null): Response
     {
         if(!$quizz) {
             throw $this->createNotFoundException('Quizz introuvable');
         }
         return $this->render('admin/question/index.html.twig', [
-            // 'questions' => $questionRepository->findAll(),
             'quizz' => $quizz,
-            // 'questions' => $quizz->getQuestions(),
         ]);
     }
 
