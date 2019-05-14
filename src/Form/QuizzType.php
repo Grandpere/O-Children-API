@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Quizz;
+use App\Entity\World;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuizzType extends AbstractType
@@ -15,7 +17,8 @@ class QuizzType extends AbstractType
             ->add('title')
             ->add('image')
             ->add('description')
-            ->add('world', null, [
+            ->add('world', EntityType::class, [
+                'class' => World::class,
                 'choice_label' => 'name',
                 'expanded' => true,
             ])

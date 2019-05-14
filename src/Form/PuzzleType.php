@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\World;
 use App\Entity\Puzzle;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PuzzleType extends AbstractType
@@ -15,7 +17,8 @@ class PuzzleType extends AbstractType
             ->add('title')
             ->add('image')
             ->add('description')
-            ->add('world', null, [
+            ->add('world', EntityType::class, [
+                'class' => World::class,
                 'choice_label' => 'name',
                 'expanded' => true,
             ])
