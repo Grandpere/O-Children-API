@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AnswerController extends AbstractController
 {
     /**
-     * @Route("/{id}/answers", name="index", methods={"GET"})
+     * @Route("/{id}/answers", name="index", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function index(Question $question = null): Response
     {
@@ -31,7 +31,7 @@ class AnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/answers/new", name="new", methods={"GET","POST"})
+     * @Route("/{id}/answers/new", name="new", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function new(Request $request, Question $question = null): Response
     {
@@ -59,7 +59,7 @@ class AnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/answers/{answerId}", name="show", methods={"GET"})
+     * @Route("/{id}/answers/{answerId}", name="show", methods={"GET"}, requirements={"id"="\d+", "answerId"="\d+"})
      */
     public function show($answerId, AnswerRepository $answerRepository): Response
     {
@@ -73,7 +73,7 @@ class AnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/answers/{answerId}/edit", name="edit", methods={"GET","POST"})
+     * @Route("/{id}/answers/{answerId}/edit", name="edit", methods={"GET","POST"}, requirements={"id"="\d+", "answerId"="\d+"})
      */
     public function edit(Request $request, $answerId, AnswerRepository $answerRepository): Response
     {
@@ -99,7 +99,7 @@ class AnswerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id"="\d+"})
      */
     public function delete(Request $request, Answer $answer): Response
     {
