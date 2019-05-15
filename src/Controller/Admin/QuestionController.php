@@ -100,7 +100,7 @@ class QuestionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id"="\d+"})
+     * @Route("/questions/{id}", name="delete", methods={"DELETE"}, requirements={"id"="\d+"})
      */
     public function delete(Request $request, Question $question): Response
     {
