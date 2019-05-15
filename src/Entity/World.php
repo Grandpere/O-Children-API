@@ -37,6 +37,11 @@ class World
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"world_list", "world_show", "world_get_quizz", "world_get_puzzle"})
+     * @Assert\File(
+     * maxSize = "1024k", 
+     * mimeTypes={ "image/gif", "image/jpeg", "image/png", "image/svg+xml" },
+     * mimeTypesMessage = "Please valid image format : gif, png, jpeg, svg"
+     * )
      */
     private $image;
 
