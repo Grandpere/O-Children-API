@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class PuzzleType extends AbstractType
 {
@@ -15,8 +16,12 @@ class PuzzleType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('image')
             ->add('description')
+            ->add('image', FileType::class,[
+                'label' => 'image (jpg,png,gif, svg)',
+                'required' => false,
+                'data_class' => null,
+            ])
             ->add('world', EntityType::class, [
                 'class' => World::class,
                 'choice_label' => 'name',

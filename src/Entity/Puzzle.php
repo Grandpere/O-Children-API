@@ -31,6 +31,11 @@ class Puzzle
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show"})
+     * @Assert\File(
+     * maxSize = "1024k", 
+     * mimeTypes={ "image/gif", "image/jpeg", "image/png", "image/svg+xml" },
+     * mimeTypesMessage = "Please valid image format : gif, png, jpeg, svg"
+     * )
      */
     private $image;
 

@@ -24,6 +24,7 @@ class Category
     /**
      * @ORM\Column(type="string", length=64)
      * @Groups({"category_list", "category_show", "world_get_quizz", "world_get_puzzle", "category_get_quizz", "category_get_puzzle"})
+     * @Assert\NotBlank
      */
     private $name;
 

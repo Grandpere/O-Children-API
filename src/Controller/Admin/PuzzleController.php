@@ -4,11 +4,14 @@ namespace App\Controller\Admin;
 
 use App\Entity\Puzzle;
 use App\Form\PuzzleType;
+use App\Utils\FileUploader;
 use App\Repository\PuzzleRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/puzzle", name="admin_puzzle_")
@@ -28,13 +31,20 @@ class PuzzleController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         $puzzle = new Puzzle();
         $form = $this->createForm(PuzzleType::class, $puzzle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form->get('image')->getData();
+            if(!is_null($puzzle->getImage())){
+                $fileName = $fileUploader->upload($file);
+                $puzzle->setImage($fileName);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($puzzle);
             $entityManager->flush();
@@ -61,12 +71,33 @@ class PuzzleController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function edit(Request $request, Puzzle $puzzle): Response
+    public function edit(Request $request, Puzzle $puzzle, FileUploader $fileUploader): Response
     {
+        $oldImage = $puzzle->getImage();
+        if(!empty($oldImage)) {
+            $puzzle->setImage(
+                new File($this->getParameter('images_directory').'/'.$oldImage)
+            );
+        }
+        
         $form = $this->createForm(PuzzleType::class, $puzzle);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if(!is_null($puzzle->getImage())){
+                $file = $form->get('image')->getData();
+                $fileName = $fileUploader->upload($file);                
+                $puzzle->setImage($fileName);
+                if(!empty($oldImage)){
+                    unlink(
+                        $this->getParameter('images_directory') .'/'.$oldImage
+                    );
+                }
+            } else {
+                $puzzle->setImage($oldImage); //ancien nom de fichier
+            }
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_puzzle_index', [
@@ -87,8 +118,11 @@ class PuzzleController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$puzzle->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $filename = $puzzle->getImage();
             $entityManager->remove($puzzle);
             $entityManager->flush();
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getParameter('images_directory') .'/'.$filename);
         }
 
         return $this->redirectToRoute('admin_puzzle_index');
