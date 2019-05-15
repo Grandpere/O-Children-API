@@ -4,11 +4,14 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Utils\FileUploader;
 use App\Repository\CategoryRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/category", name="admin_category_")
@@ -28,13 +31,20 @@ class CategoryController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form->get('image')->getData();
+            if(!is_null($category->getImage())){
+                $fileName = $fileUploader->upload($file);
+                $category->setImage($fileName);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();
@@ -61,12 +71,33 @@ class CategoryController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function edit(Request $request, Category $category): Response
+    public function edit(Request $request, Category $category, FileUploader $fileUploader): Response
     {
+        $oldImage = $category->getImage();
+        if(!empty($oldImage)) {
+            $category->setImage(
+                new File($this->getParameter('images_directory').'/'.$oldImage)
+            );
+        }
+
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if(!is_null($category->getImage())){
+                $file = $form->get('image')->getData();
+                $fileName = $fileUploader->upload($file);                
+                $category->setImage($fileName);
+                if(!empty($oldImage)){
+                    unlink(
+                        $this->getParameter('images_directory') .'/'.$oldImage
+                    );
+                }
+            } else {
+                $category->setImage($oldImage); //ancien nom de fichier
+            }
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_category_index', [
@@ -87,8 +118,11 @@ class CategoryController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $filename = $category->getImage();
             $entityManager->remove($category);
             $entityManager->flush();
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getParameter('images_directory') .'/'.$filename);
         }
 
         return $this->redirectToRoute('admin_category_index');

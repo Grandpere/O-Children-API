@@ -79,7 +79,7 @@ class WorldController extends AbstractController
                 new File($this->getParameter('images_directory').'/'.$oldImage)
             );
         }
-        // dd($world);
+        
         $form = $this->createForm(WorldType::class, $world);
         $form->handleRequest($request);
 

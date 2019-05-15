@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -29,6 +30,11 @@ class Category
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"category_list", "category_show", "category_get_quizz", "category_get_puzzle"})
+     * @Assert\File(
+     * maxSize = "1024k", 
+     * mimeTypes={ "image/gif", "image/jpeg", "image/png", "image/svg+xml" },
+     * mimeTypesMessage = "Please valid image format : gif, png, jpeg, svg"
+     * )
      */
     private $image;
 
