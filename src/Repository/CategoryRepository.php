@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Category;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Category|null find($id, $lockMode = null, $lockVersion = null)
@@ -56,6 +56,17 @@ class CategoryRepository extends ServiceEntityRepository
                         ->andWhere('c.id = :category')
                         ->setParameter('category', $category)
                         ->orderBy('q.id', 'ASC');
+        return $query->getQuery()->getResult();
+    }
+
+    public function allPuzzles($category)
+    {
+        $query = $this->createQueryBuilder('c')
+                        ->innerJoin('c.quizzs', 'p')
+                        ->addSelect('p')
+                        ->andWhere('c.id = :category')
+                        ->setParameter('category', $category)
+                        ->orderBy('p.id', 'ASC');
         return $query->getQuery()->getResult();
     }
 }

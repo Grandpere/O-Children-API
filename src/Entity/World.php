@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,26 +17,26 @@ class World
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"world_list", "world_show", "world_get_quizz", "category_get_quizz"})
+     * @Groups({"world_list", "world_show", "world_get_quizz", "world_get_puzzle", "category_get_quizz", "category_get_puzzle"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=64)
-     * @Groups({"world_list", "world_show", "world_get_quizz", "category_get_quizz"})
+     * @Groups({"world_list", "world_show", "world_get_quizz", "world_get_puzzle", "category_get_quizz", "category_get_puzzle"})
      * @Assert\NotBlank
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"world_list", "world_show", "world_get_quizz"})
+     * @Groups({"world_list", "world_show", "world_get_quizz", "world_get_puzzle"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"world_list", "world_show", "world_get_quizz"})
+     * @Groups({"world_list", "world_show", "world_get_quizz", "world_get_puzzle"})
      */
     private $image;
 
@@ -58,6 +58,7 @@ class World
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Puzzle", mappedBy="world")
+     * @Groups({"world_get_puzzle"})
      */
     private $puzzles;
 

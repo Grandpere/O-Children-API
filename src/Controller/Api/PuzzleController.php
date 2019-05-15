@@ -18,25 +18,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PuzzleController extends AbstractController
 {
     /**
-     * @Route("/", name="get_All_Puzzles", methods={"GET"})
-     * @SWG\Response(
-     *  response=200,
-     *  description="Retourne la liste des puzzles",
-     *  @SWG\Schema(
-     *      type="array",
-     *      @SWG\Items(ref=@Model(type=Puzzle::class, groups={"puzzle_list"}))
-     *  )
-     * )
-     * @SWG\Tag(name="Puzzles")
-     */
-    public function read(PuzzleRepository $puzzleRepository, SerializerInterface $serializer)
-    {
-        $puzzles = $puzzleRepository->findAll();
-        $jsonPuzzles = $serializer->serialize($puzzles, 'json', ['groups' => 'puzzle_list']);
-        return JsonResponse::fromJsonString($jsonPuzzles);
-    }
-
-    /**
      * @Route("/{id}", name="get_One_Puzzle", methods={"GET"}, requirements={"id"="\d+"})
      * @SWG\Response(
      *  response=200,

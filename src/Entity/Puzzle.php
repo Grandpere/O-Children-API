@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,26 +17,26 @@ class Puzzle
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"world_show", "category_show", "puzzle_list", "puzzle_show"})
+     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
-     * @Groups({"world_show", "category_show", "puzzle_list", "puzzle_show"})
+     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show"})
      * @Assert\NotBlank
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"world_show", "category_show", "puzzle_list", "puzzle_show"})
+     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"world_show", "category_show", "puzzle_list", "puzzle_show"})
+     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show"})
      */
     private $description;
 
@@ -52,11 +52,13 @@ class Puzzle
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="puzzles")
+     * @Groups({"world_get_puzzle"})
      */
     private $categories;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\World", inversedBy="puzzles")
+     * @Groups({"category_get_puzzle"})
      */
     private $world;
 

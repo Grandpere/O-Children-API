@@ -96,13 +96,48 @@ class WorldController extends AbstractController
      * )
      * @SWG\Tag(name="Worlds")
      */
-    public function getActivities($id, WorldRepository $worldRepository, SerializerInterface $serializer)
+    public function getQuizzs($id, WorldRepository $worldRepository, SerializerInterface $serializer)
     {
         $world = $worldRepository->allQuizzs($id);
         if(!$world) { 
             return $this->json($data = ["code" => 404, "message" => "Monde non trouvé"], $status = 404);
         }
         $jsonWorld = $serializer->serialize($world, 'json', ['groups' => 'world_get_quizz']);
+        return JsonResponse::fromJsonString($jsonWorld);
+    }
+
+        /**
+     * @Route("/{id}/puzzles", name="get_puzzles", methods={"GET"}, requirements={"id"="\d+"})
+     * @SWG\Response(
+     *  response=200,
+     *  description="Retourne tous les puzzles du monde ciblé dans l'URL",
+     *  @SWG\Schema(ref=@Model(type=World::class, groups={"world_get_puzzle"})))
+     * )
+     * @SWG\Response(
+     *  response=404,
+     *  description="Monde non trouvé",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="404"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Monde non trouvé"
+ *          )
+     *  )
+     * )
+     * @SWG\Tag(name="Worlds")
+     */
+    public function getPuzzles($id, WorldRepository $worldRepository, SerializerInterface $serializer)
+    {
+        $world = $worldRepository->allPuzzles($id);
+        if(!$world) { 
+            return $this->json($data = ["code" => 404, "message" => "Monde non trouvé"], $status = 404);
+        }
+        $jsonWorld = $serializer->serialize($world, 'json', ['groups' => 'world_get_puzzle']);
         return JsonResponse::fromJsonString($jsonWorld);
     }
 }

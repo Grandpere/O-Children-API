@@ -89,26 +89,61 @@ class CategoryController extends AbstractController
      *  description="Catégorie non trouvée",
      *  @SWG\Schema(
      *      @SWG\Property(
- *              property="code",
- *              type="integer",
- *              example="404"
- *          ),
- *          @SWG\Property(
- *              property="message",
- *              type="string",
- *              example="Catégorie non trouvée"
- *          )
+     *              property="code",
+     *              type="integer",
+     *              example="404"
+     *          ),
+     *          @SWG\Property(
+     *              property="message",
+     *              type="string",
+     *              example="Catégorie non trouvée"
+     *          )
      *  )
      * )
      * @SWG\Tag(name="Categories")
      */
-    public function getActivities($id, CategoryRepository $categoryRepository, SerializerInterface $serializer)
+    public function getQuizzs($id, CategoryRepository $categoryRepository, SerializerInterface $serializer)
     {
-        $world = $categoryRepository->allQuizzs($id);
-        if(!$world) { 
+        $category = $categoryRepository->allQuizzs($id);
+        if(!$category) { 
             return $this->json($data = ["code" => 404, "message" => "Catégorie non trouvée"], $status = 404);
         }
-        $jsonWorld = $serializer->serialize($world, 'json', ['groups' => 'category_get_quizz']);
-        return JsonResponse::fromJsonString($jsonWorld);
+        $jsonCategory= $serializer->serialize($category, 'json', ['groups' => 'category_get_quizz']);
+        return JsonResponse::fromJsonString($jsonCategory);
+    }
+
+    /**
+     * @Route("/{id}/puzzles", name="get_puzzles", methods={"GET"}, requirements={"id"="\d+"})
+     * @SWG\Response(
+     *  response=200,
+     *  description="Retourne tous les puzzles de la catégorie ciblée dans l'URL",
+     *  @SWG\Schema(ref=@Model(type=Category::class, groups={"category_get_puzzle"})))
+     * )
+     * @SWG\Response(
+     *  response=404,
+     *  description="Catégorie non trouvée",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+     *              property="code",
+     *              type="integer",
+     *              example="404"
+     *          ),
+     *          @SWG\Property(
+     *              property="message",
+     *              type="string",
+     *              example="Catégorie non trouvée"
+     *          )
+     *  )
+     * )
+     * @SWG\Tag(name="Categories")
+     */
+    public function getPuzzles($id, CategoryRepository $categoryRepository, SerializerInterface $serializer)
+    {
+        $category = $categoryRepository->allPuzzles($id);
+        if(!$category) { 
+            return $this->json($data = ["code" => 404, "message" => "Catégorie non trouvée"], $status = 404);
+        }
+        $jsonCategory= $serializer->serialize($category, 'json', ['groups' => 'category_get_puzzle']);
+        return JsonResponse::fromJsonString($jsonCategory);
     }
 }
