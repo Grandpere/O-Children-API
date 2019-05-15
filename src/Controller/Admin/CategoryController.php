@@ -6,7 +6,6 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Utils\FileUploader;
 use App\Repository\CategoryRepository;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\File;
@@ -121,8 +120,11 @@ class CategoryController extends AbstractController
             $filename = $category->getImage();
             $entityManager->remove($category);
             $entityManager->flush();
-            $filesystem = new Filesystem();
-            $filesystem->remove($this->getParameter('images_directory') .'/'.$filename);
+            if(!empty($filename)){
+                unlink(
+                    $this->getParameter('images_directory') .'/'.$filename
+                );
+            }
         }
 
         return $this->redirectToRoute('admin_category_index');

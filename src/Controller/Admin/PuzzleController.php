@@ -6,7 +6,6 @@ use App\Entity\Puzzle;
 use App\Form\PuzzleType;
 use App\Utils\FileUploader;
 use App\Repository\PuzzleRepository;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\File;
@@ -121,8 +120,11 @@ class PuzzleController extends AbstractController
             $filename = $puzzle->getImage();
             $entityManager->remove($puzzle);
             $entityManager->flush();
-            $filesystem = new Filesystem();
-            $filesystem->remove($this->getParameter('images_directory') .'/'.$filename);
+            if(!empty($filename)){
+                unlink(
+                    $this->getParameter('images_directory') .'/'.$filename
+                );
+            }
         }
 
         return $this->redirectToRoute('admin_puzzle_index');

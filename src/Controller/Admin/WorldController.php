@@ -6,7 +6,6 @@ use App\Entity\World;
 use App\Form\WorldType;
 use App\Utils\FileUploader;
 use App\Repository\WorldRepository;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\File;
@@ -121,8 +120,11 @@ class WorldController extends AbstractController
             $filename = $world->getImage();
             $entityManager->remove($world);
             $entityManager->flush();
-            $filesystem = new Filesystem();
-            $filesystem->remove($this->getParameter('images_directory') .'/'.$filename);
+            if(!empty($filename)){
+                unlink(
+                    $this->getParameter('images_directory') .'/'.$filename
+                );
+            }
         }
 
         return $this->redirectToRoute('admin_world_index');
