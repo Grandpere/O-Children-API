@@ -47,6 +47,10 @@ class QuizzController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($quizz);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Quizz ajouté avec succès'
+                );
 
             return $this->redirectToRoute('admin_quizz_index');
         }
@@ -98,6 +102,10 @@ class QuizzController extends AbstractController
             }
 
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(
+                'success',
+                'Quizz modifié avec succès'
+                );
 
             return $this->redirectToRoute('admin_quizz_index', [
                 'id' => $quizz->getId(),
@@ -120,6 +128,10 @@ class QuizzController extends AbstractController
             $filename = $quizz->getImage();
             $entityManager->remove($quizz);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Quizz supprimé avec succès'
+                );
             if(!empty($filename)){
                 unlink(
                     $this->getParameter('images_directory') .'/'.$filename
