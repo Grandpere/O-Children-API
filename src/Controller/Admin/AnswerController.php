@@ -56,6 +56,10 @@ class AnswerController extends AbstractController
             $answer->setQuestion($question);
             $entityManager->persist($answer);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Réponse ajoutée avec succès'
+                );
 
             return $this->redirectToRoute('admin_answer_index', ['id'=> $question->getId()]);
         }
@@ -117,6 +121,10 @@ class AnswerController extends AbstractController
             }
 
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(
+                'success',
+                'Réponse modifiée avec succès'
+                );
 
             return $this->redirectToRoute('admin_answer_index', [
                 'id' => $answer->getQuestion()->getId(),
@@ -147,6 +155,10 @@ class AnswerController extends AbstractController
             }            
             $entityManager->remove($answer);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Réponse supprimée avec succès'
+                );
             if(!empty($filename)){
                 unlink(
                     $this->getParameter('images_directory') .'/'.$filename
