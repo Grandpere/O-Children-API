@@ -107,9 +107,7 @@ class QuizzController extends AbstractController
                 'Quizz modifié avec succès'
                 );
 
-            return $this->redirectToRoute('admin_quizz_index', [
-                'id' => $quizz->getId(),
-            ]);
+            return $this->redirectToRoute('admin_quizz_index');
         }
 
         return $this->render('admin/quizz/edit.html.twig', [

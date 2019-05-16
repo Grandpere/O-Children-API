@@ -107,9 +107,7 @@ class CategoryController extends AbstractController
                 'Catégorie modifiée avec succès'
                 );
 
-            return $this->redirectToRoute('admin_category_index', [
-                'id' => $category->getId(),
-            ]);
+            return $this->redirectToRoute('admin_category_index');
         }
 
         return $this->render('admin/category/edit.html.twig', [

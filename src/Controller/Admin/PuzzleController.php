@@ -107,9 +107,7 @@ class PuzzleController extends AbstractController
                 'Puzzle modifié avec succès'
                 );
 
-            return $this->redirectToRoute('admin_puzzle_index', [
-                'id' => $puzzle->getId(),
-            ]);
+            return $this->redirectToRoute('admin_puzzle_index');
         }
 
         return $this->render('admin/puzzle/edit.html.twig', [

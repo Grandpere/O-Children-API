@@ -107,9 +107,7 @@ class WorldController extends AbstractController
                 'Monde modifié avec succès'
                 );
 
-            return $this->redirectToRoute('admin_world_index', [
-                'id' => $world->getId(),
-            ]);
+            return $this->redirectToRoute('admin_world_index');
         }
 
         return $this->render('admin/world/edit.html.twig', [
