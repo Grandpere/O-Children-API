@@ -31,6 +31,11 @@ class Question
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"quizz_show"})
+     * @Assert\File(
+     * maxSize = "1024k", 
+     * mimeTypes={ "image/gif", "image/jpeg", "image/png", "image/svg+xml" },
+     * mimeTypesMessage = "Please valid image format : gif, png, jpeg, svg"
+     * )
      */
     private $image;
 

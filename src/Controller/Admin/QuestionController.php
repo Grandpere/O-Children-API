@@ -5,11 +5,13 @@ namespace App\Controller\Admin;
 use App\Entity\Quizz;
 use App\Entity\Question;
 use App\Form\QuestionType;
+use App\Utils\FileUploader;
 use App\Repository\QuizzRepository;
 use App\Repository\AnswerRepository;
 use App\Repository\QuestionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -34,7 +36,7 @@ class QuestionController extends AbstractController
     /**
      * @Route("/{id}/questions/new", name="new", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function new(Request $request, Quizz $quizz = null): Response
+    public function new(Request $request, Quizz $quizz = null, FileUploader $fileUploader): Response
     {
         if(!$quizz) {
             throw $this->createNotFoundException('Quizz introuvable');
@@ -44,6 +46,13 @@ class QuestionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $file = $form->get('image')->getData();
+            if(!is_null($question->getImage())){
+                $fileName = $fileUploader->upload($file);
+                $question->setImage($fileName);
+            }
+            
             $entityManager = $this->getDoctrine()->getManager();
             $question->setQuizz($quizz);
             $entityManager->persist($question);
@@ -76,16 +85,38 @@ class QuestionController extends AbstractController
     /**
      * @Route("/{id}/questions/{questionId}/edit", name="edit", methods={"GET","POST"}, requirements={"id"="\d+", "questionId"="\d+"})
      */
-    public function edit(Request $request, $questionId, QuestionRepository $questionRepository): Response
+    public function edit(Request $request, $questionId, QuestionRepository $questionRepository, FileUploader $fileUploader): Response
     {
         $question = $questionRepository->find($questionId);
         if(!$question) {
             throw $this->createNotFoundException('Question introuvable');
         }
+
+        $oldImage = $question->getImage();
+        if(!empty($oldImage)) {
+            $question->setImage(
+                new File($this->getParameter('images_directory').'/'.$oldImage)
+            );
+        }
+
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if(!is_null($question->getImage())){
+                $file = $form->get('image')->getData();
+                $fileName = $fileUploader->upload($file);                
+                $question->setImage($fileName);
+                if(!empty($oldImage)){
+                    unlink(
+                        $this->getParameter('images_directory') .'/'.$oldImage
+                    );
+                }
+            } else {
+                $question->setImage($oldImage); //ancien nom de fichier
+            }
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('admin_question_index', [
@@ -106,8 +137,14 @@ class QuestionController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $filename = $question->getImage();
             $entityManager->remove($question);
             $entityManager->flush();
+            if(!empty($filename)){
+                unlink(
+                    $this->getParameter('images_directory') .'/'.$filename
+                );
+            }
         }
 
         return $this->redirectToRoute('admin_question_index', [
