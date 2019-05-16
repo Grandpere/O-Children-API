@@ -47,6 +47,10 @@ class CategoryController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Catégorie ajoutée avec succès'
+                );
 
             return $this->redirectToRoute('admin_category_index');
         }
@@ -98,6 +102,10 @@ class CategoryController extends AbstractController
             }
             
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(
+                'success',
+                'Catégorie modifiée avec succès'
+                );
 
             return $this->redirectToRoute('admin_category_index', [
                 'id' => $category->getId(),
@@ -120,6 +128,10 @@ class CategoryController extends AbstractController
             $filename = $category->getImage();
             $entityManager->remove($category);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Catégorie supprimée avec succès'
+                );
             if(!empty($filename)){
                 unlink(
                     $this->getParameter('images_directory') .'/'.$filename
