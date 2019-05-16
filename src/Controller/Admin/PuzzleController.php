@@ -47,6 +47,10 @@ class PuzzleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($puzzle);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Puzzle ajouté avec succès'
+                );
 
             return $this->redirectToRoute('admin_puzzle_index');
         }
@@ -98,6 +102,10 @@ class PuzzleController extends AbstractController
             }
             
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(
+                'success',
+                'Puzzle modifié avec succès'
+                );
 
             return $this->redirectToRoute('admin_puzzle_index', [
                 'id' => $puzzle->getId(),
@@ -120,6 +128,10 @@ class PuzzleController extends AbstractController
             $filename = $puzzle->getImage();
             $entityManager->remove($puzzle);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Puzzle supprimé avec succès'
+                );
             if(!empty($filename)){
                 unlink(
                     $this->getParameter('images_directory') .'/'.$filename
