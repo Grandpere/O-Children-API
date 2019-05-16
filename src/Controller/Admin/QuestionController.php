@@ -57,6 +57,10 @@ class QuestionController extends AbstractController
             $question->setQuizz($quizz);
             $entityManager->persist($question);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Question ajoutée avec succès'
+                );
 
             return $this->redirectToRoute('admin_question_index', ['id'=> $quizz->getId()]);
         }
@@ -118,6 +122,10 @@ class QuestionController extends AbstractController
             }
             
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(
+                'success',
+                'Question modifiée avec succès'
+                );
 
             return $this->redirectToRoute('admin_question_index', [
                 'id' => $question->getQuizz()->getId(),
@@ -140,6 +148,10 @@ class QuestionController extends AbstractController
             $filename = $question->getImage();
             $entityManager->remove($question);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Question supprimée avec succès'
+                );
             if(!empty($filename)){
                 unlink(
                     $this->getParameter('images_directory') .'/'.$filename
@@ -171,7 +183,7 @@ class QuestionController extends AbstractController
             $entityManager->flush();
             $this->addFlash(
                 'success',
-                'Enregistrement effectué'
+                'Cette réponse est maintenant la bonne réponse à la question'
         );
         }
         return $this->redirectToRoute('admin_answer_index', ['id'=> $question->getId()]);
