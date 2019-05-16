@@ -47,6 +47,10 @@ class WorldController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($world);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Monde ajouté avec succès'
+                );
 
             return $this->redirectToRoute('admin_world_index');
         }
@@ -98,6 +102,10 @@ class WorldController extends AbstractController
             }
 
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash(
+                'success',
+                'Monde modifié avec succès'
+                );
 
             return $this->redirectToRoute('admin_world_index', [
                 'id' => $world->getId(),
@@ -120,6 +128,10 @@ class WorldController extends AbstractController
             $filename = $world->getImage();
             $entityManager->remove($world);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Monde supprimé avec succès'
+                );
             if(!empty($filename)){
                 unlink(
                     $this->getParameter('images_directory') .'/'.$filename
