@@ -1,0 +1,10 @@
+{# templates/bundles/TwigBundle/Exception/error403.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>403 - Forbidden</h1>
+
+    <p>
+        You do not have permission to access this page. Contact the administrator if you think this is an error or <a href="{{ path('admin_index') }}">return to the homepage</a>.
+    </p>
+{% endblock %}

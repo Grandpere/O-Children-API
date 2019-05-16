@@ -3,7 +3,6 @@
 {% block title %}Ochildren Administration{% endblock %}
 
 {% block body %}
-{% if is_granted('ROLE_ADMIN') %}
 <a class="nav-item nav-link" href="{{ path('admin_world_index') }}"> 
     Gestion des mondes 
 </a>
@@ -16,5 +15,4 @@
 <a class="nav-item nav-link" href="{{ path('admin_puzzle_index') }}"> 
     Gestion des puzzles 
 </a>
-{% endif %}
 {% endblock %}
