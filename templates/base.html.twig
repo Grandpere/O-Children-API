@@ -14,14 +14,35 @@
 
 <body>
     <header>
-        <div id="banner" class="jumbotron">
-            <h1>
+        <div id="banner" class="jumbotron mb-0">
+            <h1 class="text-center">
                 <a href="{{ path('admin_index')}}">
                     Ochildren Administration
                 </a>
             </h1>
         </div>
-        {% include "navigation/_main_nav.html.twig" %}
+        <nav>
+            <ul class="nav nav-tabs justify-content-center my-2">
+                <li class="nav-item">
+                    <a class="nav-link {% block adminHome %}{% endblock %}" href="{{ path('admin_index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% block adminWorld %}{% endblock %}" href="{{ path('admin_world_index') }}">Gestion des mondes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% block adminCategory %}{% endblock %}" href="{{ path('admin_category_index') }}">Gestion des catégories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% block adminQuizz %}{% endblock %}" href="{{ path('admin_quizz_index') }}">Gestion des Quizzs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% block adminPuzzle %}{% endblock %}" href="{{ path('admin_puzzle_index') }}">Gestion des puzzles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
+                </li>
+            </ul>
+        </nav>
     </header>
     <div class="container-fluid">
         <div class="row">
