@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
+use App\Utils\MailGenerator;
 use Swagger\Annotations as SWG;
 use App\Utils\PasswordGenerator;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\UserRepository;
-use App\Utils\MailGenerator;
 
 class UserPasswordController extends AbstractController
 {
@@ -16,9 +16,52 @@ class UserPasswordController extends AbstractController
      * @Route("/api/password/forgotten", name="forgotten_password", methods={"POST"})
      * @SWG\Response(
      *  response=200,
-     *  description="Mail envoyé avec le nouveau mot de passe"
+     *  description="Mail envoyé avec le nouveau mot de passe",
+     * @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="200"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Mot de passe envoyé"
+ *          )
+     *  )
      * )
-     * // TODO: doc à faire
+     * @SWG\Response(
+     *  response=400,
+     *  description="Le formulaire n'est pas correct",
+     * @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="400"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Le formulaire doit contenir un champ dont le name est email"
+ *          )
+     *  )
+     * )
+     * @SWG\Response(
+     *  response=404,
+     *  description="Utilisateur non trouvé",
+     * @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="404"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Utilisateur non trouvé"
+ *          )
+     *  )
+     * )
      * @SWG\Tag(name="Users")
      */
     public function newPassword(Request $request, UserRepository $userRepository, PasswordGenerator $pwdGenerator, MailGenerator $mailGenerator) {

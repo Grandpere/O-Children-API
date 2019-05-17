@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use Swagger\Annotations as SWG;
 use App\Repository\RoleRepository;
+use App\Repository\UserRepository;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,7 @@ class RegistrationController extends AbstractController
      *      @SWG\Property(
  *              property="code",
  *              type="integer",
- *              example="404"
+ *              example="201"
  *          ),
  *          @SWG\Property(
  *              property="message",
@@ -36,6 +37,22 @@ class RegistrationController extends AbstractController
  *              type="integer",
  *              example="1"
  *          )
+     *  )
+     * )
+     * @SWG\Response(
+     *  response=409,
+     *  description="Un compte existe déja pour cet email",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="201"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Un compte existe déja pour cet email"
+ *          ),
      *  )
      * )
      * @SWG\Parameter(
@@ -64,17 +81,25 @@ class RegistrationController extends AbstractController
      * )
      * @SWG\Tag(name="Users")
      */
-    public function register(Request $request, SerializerInterface $serializer, RoleRepository $roleRepository)
+    public function register(Request $request, SerializerInterface $serializer, RoleRepository $roleRepository, UserRepository $userRepository)
     {
         $user = new User();
 
         $content = $request->getContent();
         $user = $serializer->deserialize($content, 'App\Entity\User', 'json');
 
+        $user->setEmail(trim($user->getEmail()));
+        $user->setPlainpassword(trim($user->getPlainpassword()));
+        $user->setPlainpassword2(trim($user->getPlainpassword2()));
+        
         if($user->getPlainpassword() == $user->getPlainpassword2()) {
             $user->setPassword($user->getPlainpassword());
         }
-        // TODO: faire les controles
+        
+        $existingUser = $userRepository->findOneByEmail($user->getEmail());
+        if($existingUser) {
+            return $this->json($data = ["code" => 409, "message" => "Un compte existe déja pour cet email"]);
+        }
         $entityManager = $this->getDoctrine()->getManager();
         $role = $roleRepository->findOneByName('ROLE_USER');
         $user->setRole($role);

@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\User;
 use Swagger\Annotations as SWG;
+use PhpParser\Node\Stmt\TryCatch;
 use App\Repository\UserRepository;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -12,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use PhpParser\Node\Stmt\TryCatch;
 
 /**
  * @Route("/api/users", name="api_user_")
@@ -42,6 +42,22 @@ class UserController extends AbstractController
  *          )
      *  )
      * )
+     * @SWG\Response(
+     *  response=401,
+     *  description="Authentification requise pour accèder aux données, token requis",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="401"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="JWT Token not found"
+ *          )
+     *  )
+     * )
      * @SWG\Parameter(
      *     name="id",
      *     in="path",
@@ -66,9 +82,84 @@ class UserController extends AbstractController
      * @SWG\Response(
      *  response=200,
      *  description="Mot de passe modifié avec succès",
+     * @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="200"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Le mot de passe a été modifié"
+ *          )
+     *  )
+     * )
+     * @SWG\Response(
+     *  response=400,
+     *  description="Le formulaire n'est pas correct",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="400"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Le formulaire doit contenir les champs dont le name est password, plainpassword et plainpassword2"
+ *          )
+     *  )
+     * )
+     * @SWG\Response(
+     *  response=401,
+     *  description="Authentification requise pour accèder aux données, token requis",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="401"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="JWT Token not found"
+ *          )
+     *  )
+     * )
+     *@SWG\Response(
+     *  response=403,
+     *  description="Authentification requise",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="403"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Le mot de passe actuel est incorrect ou n'a pas été renseigné"
+ *          )
+     *  )
+     * )
+     *@SWG\Response(
+     *  response=404,
+     *  description="Utilisateur non trouvé",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="404"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Utilisateur non trouvé"
+ *          )
+     *  )
      * )
      * @SWG\Tag(name="Users")
-     * // TODO: doc à faire
      */
     public function updatePassword($id, Request $request, SerializerInterface $serializer, UserRepository $userRepository)
     {
