@@ -100,6 +100,8 @@ class RegistrationController extends AbstractController
         if($existingUser) {
             return $this->json($data = ["code" => 409, "message" => "Un compte existe déja pour cet email"]);
         }
+
+        $user->setImage("https://robohash.org/".$user->getEmail()."?set=set".mt_rand(1, 4));
         $entityManager = $this->getDoctrine()->getManager();
         $role = $roleRepository->findOneByName('ROLE_USER');
         $user->setRole($role);
