@@ -4,17 +4,35 @@
 
 {% block title %}Ochildren Administration{% endblock %}
 
+
 {% block body %}
-<a class="nav-item nav-link" href="{{ path('admin_world_index') }}"> 
-    Gestion des mondes 
-</a>
-<a class="nav-item nav-link" href="{{ path('admin_category_index') }}"> 
-    Gestion des catégories 
-</a>
-<a class="nav-item nav-link" href="{{ path('admin_quizz_index') }}"> 
-    Gestion des Quizzs 
-</a>
-<a class="nav-item nav-link" href="{{ path('admin_puzzle_index') }}"> 
-    Gestion des puzzles 
-</a>
+<div class="window">
+    <div class="head">O'children Admin</div>
+    <div class="terminal">
+        <p class="log">
+            Bienvenue sur l'administration d'Ochildren. Que souhaitez vous faire ?
+        </p>
+        <div id="wrap">
+            <span class="cursor">{{ app.user.firstname}}@{{ app.request.server.get("SERVER_NAME") }}</span> <span class="end-line">$ </span>
+        </div>
+        <div class="command">
+            <ul>
+                <li>
+                    <a class="term-link" href="{{ path('admin_world_index') }}">Gérer les mondes</a>
+                </li>
+                <li>
+                    <a class="term-link" href="{{ path('admin_category_index') }}">Gérer les catégories</a>
+                </li>
+                <li>
+                    <a class="term-link" href="{{ path('admin_quizz_index') }}">Gérer les quizzs</a>
+                </li>
+                <li>
+                    <a class="term-link" href="{{ path('admin_puzzle_index') }}">Gérer les puzzles</a>
+                </li>
+                <li>
+                    <a class="term-link term-link__logout" href="{{ path('app_logout') }}">Se déconnecter</a>
+                </li>
+        </div>
+    </div>
+</div>
 {% endblock %}

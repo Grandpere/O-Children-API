@@ -17,10 +17,6 @@ class InterfaceController extends AbstractController
     public function index()
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $this->addFlash(
-            'info',
-            'Bonjour '.$this->getUser()->getFirstname().', comment allez vous ?'
-            );
         return $this->render('admin/interface/index.html.twig', [
             'controller_name' => 'InterfaceController',
         ]);
