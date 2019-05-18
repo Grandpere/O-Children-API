@@ -62,7 +62,7 @@ class CategoryRepository extends ServiceEntityRepository
     public function allPuzzles($category)
     {
         $query = $this->createQueryBuilder('c')
-                        ->innerJoin('c.quizzs', 'p')
+                        ->innerJoin('c.puzzles', 'p')
                         ->addSelect('p')
                         ->andWhere('c.id = :category')
                         ->setParameter('category', $category)

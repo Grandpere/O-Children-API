@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\World;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method World|null find($id, $lockMode = null, $lockVersion = null)
@@ -56,6 +56,17 @@ class WorldRepository extends ServiceEntityRepository
                         ->andWhere('w.id = :world')
                         ->setParameter('world', $world)
                         ->orderBy('q.id', 'ASC');
+        return $query->getQuery()->getResult();
+    }
+
+    public function allPuzzles($world)
+    {
+        $query = $this->createQueryBuilder('w')
+                        ->innerJoin('w.puzzles', 'p')
+                        ->addSelect('p')
+                        ->andWhere('w.id = :world')
+                        ->setParameter('world', $world)
+                        ->orderBy('p.id', 'ASC');
         return $query->getQuery()->getResult();
     }
 }
