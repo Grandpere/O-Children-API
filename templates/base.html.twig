@@ -26,6 +26,7 @@
                 <li class="nav-item">
                     <a class="nav-link {% block adminHome %}{% endblock %}" href="{{ path('admin_index') }}">Home</a>
                 </li>
+                {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
                     <a class="nav-link {% block adminWorld %}{% endblock %}" href="{{ path('admin_world_index') }}">Gestion des mondes</a>
                 </li>
@@ -41,6 +42,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
                 </li>
+                {% endif %}
             </ul>
         </nav>
     </header>
