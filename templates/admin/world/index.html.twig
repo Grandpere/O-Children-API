@@ -2,10 +2,10 @@
 
 {% block adminWorld %}active{% endblock %}
 
-{% block title %}World index{% endblock %}
+{% block title %}Gestion des mondes{% endblock %}
 
 {% block body %}
-    <h1>World index</h1>
+    <h1>Gestion des mondes</h1>
 
     <table class="table">
         <thead>
@@ -29,8 +29,8 @@
                 <td>{{ world.createdAt ? world.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ world.updatedAt ? world.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_world_show', {'id': world.id}) }}">show</a>
-                    <a href="{{ path('admin_world_edit', {'id': world.id}) }}">edit</a>
+                    <a href="{{ path('admin_world_show', {'id': world.id}) }}"><i class="fas fa-eye btn-lg text-info"></i></a>
+                    <a href="{{ path('admin_world_edit', {'id': world.id}) }}"><i class="fas fa-edit btn-lg text-warning"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +41,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_world_new') }}">Create new</a>
+    <a class="btn btn-outline-success" href="{{ path('admin_world_new') }}">Create new</a>
 {% endblock %}
