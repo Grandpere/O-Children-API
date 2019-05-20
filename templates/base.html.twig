@@ -22,25 +22,25 @@
             </h1>
         </div>
         <nav>
-            <ul class="nav nav-tabs justify-content-center my-2">
+            <ul class="nav nav-tabs justify-content-center mb-2">
                 <li class="nav-item">
-                    <a class="nav-link {% block adminHome %}{% endblock %}" href="{{ path('admin_index') }}">Home</a>
+                    <a class="nav-link {% block adminHome %}{% endblock %}" href="{{ path('admin_index') }}"><i class="fas fa-home text-success"></i> Home</a>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link {% block adminWorld %}{% endblock %}" href="{{ path('admin_world_index') }}">Gestion des mondes</a>
+                    <a class="nav-link {% block adminWorld %}{% endblock %}" href="{{ path('admin_world_index') }}"><i class="fas fa-globe-europe text-success"></i> Gestion des mondes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% block adminCategory %}{% endblock %}" href="{{ path('admin_category_index') }}">Gestion des catégories</a>
+                    <a class="nav-link {% block adminCategory %}{% endblock %}" href="{{ path('admin_category_index') }}"><i class="fas fa-hashtag text-success"></i> Gestion des catégories</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% block adminQuizz %}{% endblock %}" href="{{ path('admin_quizz_index') }}">Gestion des Quizzs</a>
+                    <a class="nav-link {% block adminQuizz %}{% endblock %}" href="{{ path('admin_quizz_index') }}"><i class="fas fa-question-circle text-success"></i> Gestion des Quizzs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% block adminPuzzle %}{% endblock %}" href="{{ path('admin_puzzle_index') }}">Gestion des puzzles</a>
+                    <a class="nav-link {% block adminPuzzle %}{% endblock %}" href="{{ path('admin_puzzle_index') }}"><i class="fas fa-puzzle-piece text-success"></i> Gestion des puzzles</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
+                    <a class="nav-link" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt text-danger"></i> Deconnexion</a>
                 </li>
                 {% endif %}
             </ul>
@@ -61,6 +61,22 @@
             </div>
         </div>
     </div>
+    <footer>
+        <ul class="nav justify-content-center my-2">
+            <li class="nav-item">
+                <a class="nav-link" href="https://fr.linkedin.com/in/lorenzomarozzo">Lorenzo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://fr.linkedin.com/in/mathieu-pereira">Mathieu</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://fr.linkedin.com/in/anatole-lucet-3b2790157">Anatole</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://fr.linkedin.com/in/philippe-chiarla-459267143">Philippe</a>
+            </li>
+        </ul>
+    </footer>
     {% block javascripts %}{% endblock %}
 </body>
 

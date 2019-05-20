@@ -2,10 +2,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>404 - Page not found</h1>
-
-    <p>
-        The requested page couldn't be located. Checkout for any URL
-        misspelling or <a href="{{ path('admin_index') }}">return to the homepage</a>.
-    </p>
+<div class="window">
+    <div class="head">404 - Page not found</div>
+    <div class="terminal">
+        <p class="log">
+            The requested page couldn't be located. Checkout for any URL misspelling
+        </p>
+        <div id="wrap">
+            <span class="cursor">{{ app.user.firstname}}@{{ app.request.server.get("SERVER_NAME") }}</span> <span class="end-line">$ </span>
+        </div>
+        <div class="command">&nbsp;</div>
+        <div class="command">
+            <ul>
+                <li>
+                    <a class="term-link" href="{{ path('admin_index') }}">return to the homepage</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

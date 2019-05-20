@@ -2,9 +2,26 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>403 - Forbidden</h1>
-
-    <p>
-        You do not have permission to access this page. Contact the administrator if you think this is an error or <a href="{{ path('admin_index') }}">return to the homepage</a>.
-    </p>
+<div class="window">
+    <div class="head">403 - Forbidden</div>
+    <div class="terminal">
+        <p class="log">
+            You do not have permission to access this page.
+        </p>
+        <p class="log">
+            Contact the administrator if you think this is an error.
+        </p>
+        <div id="wrap">
+            <span class="cursor">{{ app.user.firstname}}@{{ app.request.server.get("SERVER_NAME") }}</span> <span class="end-line">$ </span>
+        </div>
+        <div class="command">&nbsp;</div>
+        <div class="command">
+            <ul>
+                <li>
+                    <a class="term-link" href="{{ path('admin_index') }}">return to the homepage</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
