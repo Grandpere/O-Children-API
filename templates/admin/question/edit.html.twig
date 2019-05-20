@@ -5,11 +5,12 @@
 {% block title %}Edit Question{% endblock %}
 
 {% block body %}
-    <h1>Edit Question</h1>
+    <div class="d-flex justify-content-end align-items-center">
+        <h1 class="mr-auto">Edit Question</h1>
+        {{ include('admin/question/_delete_form.html.twig') }}
+    </div>
 
     {{ include('admin/question/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('admin_question_index', {'id': question.quizz.id}) }}">back to list</a>
-
-    {{ include('admin/question/_delete_form.html.twig') }}
+    <a class="btn btn-outline-dark mt-2" href="{{ path('admin_question_index', {'id': question.quizz.id}) }}">back to list</a>
 {% endblock %}

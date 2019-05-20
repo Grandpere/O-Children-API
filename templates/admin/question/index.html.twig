@@ -2,10 +2,10 @@
 
 {% block adminQuizz %}active{% endblock %}
 
-{% block title %}Question index of quizz {{ quizz.title }}{% endblock %}
+{% block title %}Gestion des questions du quizz "{{ quizz.title }}"{% endblock %}
 
 {% block body %}
-    <h1>Question index of quizz {{ quizz.title }}</h1>
+    <h1>Gestion des questions du quizz "{{ quizz.title }}"</h1>
 
     <table class="table">
         <thead>
@@ -27,8 +27,8 @@
                 <td>{{ question.createdAt ? question.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ question.updatedAt ? question.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_question_show', {'id': quizz.id, 'questionId': question.id}) }}">show</a>
-                    <a href="{{ path('admin_question_edit', {'id': quizz.id, 'questionId': question.id}) }}">edit</a>
+                    <a href="{{ path('admin_question_show', {'id': quizz.id, 'questionId': question.id}) }}"><i class="fas fa-eye btn-lg text-info"></i></a>
+                    <a href="{{ path('admin_question_edit', {'id': quizz.id, 'questionId': question.id}) }}"><i class="fas fa-edit btn-lg text-warning"></i></a>
                     <a href="{{ path('admin_answer_index', {'id': question.id}) }}">manage answers</a>
                 </td>
             </tr>
@@ -39,6 +39,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('admin_question_new', {'id': quizz.id}) }}">Create new</a>
-    <a href="{{ path('admin_quizz_index') }}">back to quizz list</a>
+    <a class="btn btn-outline-success" href="{{ path('admin_question_new', {'id': quizz.id}) }}">Create new</a>
+    <br>
+    <a class="btn btn-outline-dark mt-2" href="{{ path('admin_quizz_index') }}">back to quizz list</a>
 {% endblock %}
