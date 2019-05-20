@@ -2,6 +2,11 @@ body {
     background-color: #FEFAF7;
 }
 
+a:hover {
+    color: #343a40;
+    text-decoration: none;
+}
+
 .jumbotron {
     background-color: #B7DFFF;
 }
@@ -12,6 +17,10 @@ body {
 
 .container-fluid {
     min-height: calc(100vh - 242px - 60px);
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #FEFAF7;
 }
 
 .nav-tabs .nav-link:hover {
@@ -120,6 +129,19 @@ ul {
 
 .terminal input:focus {
     background-color: #2b2b2b;
+}
+
+table.table thead tr {
+    background-color: #B7DFFF;
+    text-align: center;
+}
+
+table.table tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+table.table tbody tr:nth-child(even) {
+    background-color: #eee;
 }
 
 footer {
