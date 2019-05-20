@@ -2,10 +2,10 @@
 
 {% block adminCategory %}active{% endblock %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Gestions des catégories{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
+    <h1>Gestions des catégories</h1>
 
     <table class="table">
         <thead>
@@ -29,8 +29,8 @@
                 <td>{{ category.createdAt ? category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('admin_category_edit', {'id': category.id}) }}">edit</a>
+                    <a href="{{ path('admin_category_show', {'id': category.id}) }}"><i class="fas fa-eye btn-lg text-info"></i></a>
+                    <a href="{{ path('admin_category_edit', {'id': category.id}) }}"><i class="fas fa-edit btn-lg text-warning"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +41,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_category_new') }}">Create new</a>
+    <a class="btn btn-outline-success" href="{{ path('admin_category_new') }}">Create new</a>
 {% endblock %}
