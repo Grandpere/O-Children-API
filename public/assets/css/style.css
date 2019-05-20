@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     background-color: #FEFAF7;
 }
@@ -9,14 +13,12 @@ a:hover {
 
 .jumbotron {
     background-color: #B7DFFF;
+    height: 10%;
+    padding: 20px 0;
 }
 
 .nav {
     background-color: #B7DFFF;
-}
-
-.container-fluid {
-    min-height: calc(100vh - 242px - 60px);
 }
 
 .nav-tabs .nav-link.active {
@@ -25,6 +27,10 @@ a:hover {
 
 .nav-tabs .nav-link:hover {
     background-color: rgba(255, 255, 255, 0.5);
+}
+
+.container-fluid {
+    min-height: 72%;
 }
 
 .window {
@@ -97,6 +103,7 @@ a:hover {
 
 ul {
     list-style-type: none;
+    margin-bottom: 0;
 }
 
 .term-link:hover {
@@ -146,5 +153,8 @@ table.table tbody tr:nth-child(even) {
 
 footer {
     background-color: #B7DFFF;
-    height: 60px;
+}
+
+footer .card {
+    border: none;
 }
