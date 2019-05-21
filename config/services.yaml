@@ -31,7 +31,7 @@ services:
     App\EventListener\UserListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
-            - { name: doctrine.event_listener, event: preUpdate }
+            # - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: postPersist }
     App\EventListener\UpdatedAtListener:
         tags:

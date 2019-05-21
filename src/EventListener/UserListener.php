@@ -3,9 +3,9 @@
 namespace App\EventListener;
 
 use App\Entity\User;
+use App\Utils\MailGenerator;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use App\Utils\MailGenerator;
 
 class UserListener
 {
@@ -28,10 +28,11 @@ class UserListener
         $this->sendMAilPostRegister($args);
     }
 
-    public function preUpdate(LifecycleEventArgs $args)
-    {
-        $this->hashPassword($args);
-    }
+    // public function preUpdate(LifecycleEventArgs $args)
+    // {
+    //     $this->hashPassword($args);
+    //     // encode le pwd à chaque changement dans user donc même pour favoris, à revoir pour optimiser si possible
+    // }
 
     public function sendMAilPostRegister(LifecycleEventArgs $args)
     {

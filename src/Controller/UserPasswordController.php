@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserPasswordController extends AbstractController
 {
@@ -64,7 +65,7 @@ class UserPasswordController extends AbstractController
      * )
      * @SWG\Tag(name="Users")
      */
-    public function newPassword(Request $request, UserRepository $userRepository, PasswordGenerator $pwdGenerator, MailGenerator $mailGenerator) {
+    public function newPassword(Request $request, UserRepository $userRepository, PasswordGenerator $pwdGenerator, MailGenerator $mailGenerator, UserPasswordEncoderInterface $passwordEncoder) {
         $content = $request->getContent();
         $jsonObj = json_decode($content);
         try {
@@ -78,8 +79,9 @@ class UserPasswordController extends AbstractController
             return $this->json($data = ["code" => 404, "message" => "Utilisateur non trouvé"], $status = 404);
         }
         $user->setPassword($pwdGenerator->generate());
-        $user->setUpdatedAt(new \DateTime());
         $mailGenerator->resetPassword($user);
+        $encodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
+        $user->setPassword($encodedPassword);
         $em = $this->getDoctrine()->getManager();
         $em->flush();
         return $this->json($data = ["code" => 200, "message" => "Mot de passe envoyé"], $status = 200);    
