@@ -17,20 +17,20 @@ class Puzzle
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show"})
+     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show", "user_show"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
-     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show"})
+     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show", "user_show"})
      * @Assert\NotBlank
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show"})
+     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show", "user_show"})
      * @Assert\File(
      * maxSize = "1024k", 
      * mimeTypes={ "image/gif", "image/jpeg", "image/png", "image/svg+xml" },
@@ -41,7 +41,7 @@ class Puzzle
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show"})
+     * @Groups({"category_get_puzzle", "world_get_puzzle", "puzzle_show", "user_show"})
      */
     private $description;
 
