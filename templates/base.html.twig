@@ -40,6 +40,9 @@
                     <a class="nav-link {% block adminPuzzle %}{% endblock %}" href="{{ path('admin_puzzle_index') }}"><i class="fas fa-puzzle-piece text-success"></i> Gestion des puzzles</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {% block adminUser %}{% endblock %}" href="{{ path('admin_user_index') }}"><i class="fas fa-users text-success"></i> Gestion des utilisateurs</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt text-danger"></i> Deconnexion</a>
                 </li>
                 {% endif %}
