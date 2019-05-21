@@ -96,9 +96,14 @@ class RegistrationController extends AbstractController
             $user->setPassword($user->getPlainpassword());
         }
         
-        $existingUser = $userRepository->findOneByEmail($user->getEmail());
-        if($existingUser) {
+        $existingUserEmail = $userRepository->findOneByEmail($user->getEmail());
+        if($existingUserEmail) {
             return $this->json($data = ["code" => 409, "message" => "Un compte existe déja pour cet email"]);
+        }
+
+        $existingUserUsername = $userRepository->findOneByUsername($user->getUsername());
+        if($existingUserUsername) {
+            return $this->json($data = ["code" => 409, "message" => "Username déja utilisé"]);
         }
 
         $user->setImage("https://robohash.org/".$user->getEmail()."?set=set".mt_rand(1, 4));
