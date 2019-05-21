@@ -3,7 +3,8 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/public/bundles/
+/public/bundles/nelmioapidoc/*
+!/public/bundles/nelmioapidoc/style.css
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
