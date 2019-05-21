@@ -162,7 +162,14 @@ class UserController extends AbstractController
  *          )
      *  )
      * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     description="L'identifiant de l'utilisateur"
+     * )
      * @SWG\Tag(name="Users")
+     * @Security(name="Bearer")
      */
     public function updatePassword($id, Request $request, SerializerInterface $serializer, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -201,6 +208,52 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{userId}/bookmarks/quizzs/{id}/toggle", name="quizz_bookmark", methods={"POST"}, requirements={"userId"="\d+", "id"="\d+"})
+     * @SWG\Response(
+     *  response=200,
+     *  description="Favoris ajouté s'il n'est pas présent sinon favoris supprimé",
+     * @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="200"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Favoris ajouté ou Favoris supprimé selon le cas"
+ *          )
+     *  )
+     * )
+     * @SWG\Response(
+     *  response=404,
+     *  description="Utilisateur ou quizz non trouvé",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="404"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Utilisateur ou quizz non trouvé"
+ *          )
+     *  )
+     * )
+     * @SWG\Parameter(
+     *     name="userId",
+     *     in="path",
+     *     type="integer",
+     *     description="L'identifiant de l'utilisateur"
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     description="L'identifiant du quizz"
+     * )
+     * @SWG\Tag(name="Users")
+     * @Security(name="Bearer")
      */
     public function addQuizzBookmark($userId, $id, UserRepository $userRepository, QuizzRepository $quizzRepository)
     {
@@ -227,6 +280,52 @@ class UserController extends AbstractController
 
         /**
      * @Route("/{userId}/bookmarks/puzzles/{id}/toggle", name="puzzle_bookmark", methods={"POST"}, requirements={"userId"="\d+", "id"="\d+"})
+     * @SWG\Response(
+     *  response=200,
+     *  description="Favoris ajouté s'il n'est pas présent sinon favoris supprimé",
+     * @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="200"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Favoris ajouté ou Favoris supprimé selon le cas"
+ *          )
+     *  )
+     * )
+     * @SWG\Response(
+     *  response=404,
+     *  description="Utilisateur ou puzzle non trouvé",
+     *  @SWG\Schema(
+     *      @SWG\Property(
+ *              property="code",
+ *              type="integer",
+ *              example="404"
+ *          ),
+ *          @SWG\Property(
+ *              property="message",
+ *              type="string",
+ *              example="Utilisateur ou puzzle non trouvé"
+ *          )
+     *  )
+     * )
+     * @SWG\Parameter(
+     *     name="userId",
+     *     in="path",
+     *     type="integer",
+     *     description="L'identifiant de l'utilisateur"
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     description="L'identifiant du puzzle"
+     * )
+     * @SWG\Tag(name="Users")
+     * @Security(name="Bearer")
      */
     public function addPuzzleBookmark($userId, $id, UserRepository $userRepository, PuzzleRepository $puzzleRepository)
     {
