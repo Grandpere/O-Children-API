@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block adminWorld %}active{% endblock %}
+
+{% block title %}Edit World{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-end align-items-center">
+        <h1 class="mr-auto">Edit World</h1>
+        {{ include('admin/world/_delete_form.html.twig') }}
+    </div>
+
+    {{ include('admin/world/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-outline-dark mt-2" href="{{ path('admin_world_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Bienvenue sur Ochildren</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="width:100%;">
+    <div class="container" style="width:650px; margin:auto; text-align:center;">
+        <div class="header" style="height:100px; background-color:#B7DFFF; line-height:100px;">
+            <h1 style="text-align:center;">Bienvenue sur Ochildren</h1>
+        </div>
+        <div class="body" style="background-color:#fff; padding:5px 10px;">
+            <p style="font-size:1.1em; font-weight:bold;">
+                Bonjour 
+                {% if user.firstname is not null %} 
+                    {{user.firstname}} 
+                {% else %} 
+                    {{ user.username }} 
+                {% endif %}
+            </p>
+            <p style="padding:5px">Vous venez de vous inscrire sur notre site et nous vous en remercions.</p>
+            <p style="padding:5px">Pour finaliser votre inscription, merci de cliquer sur ce lien :</p>
+            <p style="border:2px solid #79b5d8; background-color: #cae7f9; padding:15px; margin:30px; text-align:center">
+                <a href="">Activer mon compte</a>
+            </p>
+            <p style="padding:5px">L'équipe Ochildren</p><br>
+        </div>
+        <div class="footer" style="background-color:#B7DFFF; padding:5px 10px;">
+            <p> 
+                <a style="color: #04293f" href="https://www.ochildren.com">Ochildren</a>
+                &copy; 2019 
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

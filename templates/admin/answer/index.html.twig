@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block adminQuizz %}active{% endblock %}
+
+{% block title %}Gestion des réponses de la question "{{ question.content }}"{% endblock %}
+
+{% block body %}
+    <h1>Gestion des réponses de la question "{{ question.content }}"</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>Image</th>
+                <th>Created_at</th>
+                <th>Updated_at</th>
+                <th>Good Answer</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for answer in question.answers %}
+            <tr>
+                <td>{{ answer.id }}</td>
+                <td>{{ answer.content }}</td>
+                <td>{{ answer.image }}</td>
+                <td>{{ answer.createdAt ? answer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ answer.updatedAt ? answer.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <form class="form-inline" action="{{ path('admin_question_right', {'id': question.quizz.id, 'questionId':question.id, 'answerId':answer.id }) }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token('right' ~ question.id) }}">
+                        <button class="btn text-dark" type="submit">
+                        {% if question.rightAnswer.id is defined and question.rightAnswer.id is not null and question.rightAnswer.id == answer.id %}
+                        <i class="fas fa-check-circle btn-lg text-success"></i>
+                        {% else %}
+                        <i class="fas fa-times-circle btn-lg text-danger"></i>
+                        {% endif %}
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <a href="{{ path('admin_answer_show', {'id': question.id, 'answerId': answer.id}) }}"><i class="fas fa-eye btn-lg text-info"></i></a>
+                    <a href="{{ path('admin_answer_edit', {'id': question.id, 'answerId': answer.id}) }}"><i class="fas fa-edit btn-lg text-warning"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-success" href="{{ path('admin_answer_new', {'id': question.id}) }}">Create new</a>
+    <br>
+    <a class="btn btn-outline-dark mt-2" href="{{ path('admin_question_index', {'id': question.quizz.id}) }}">back to question list</a>
+{% endblock %}

@@ -1,12 +1,137 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <div id="banner" class="jumbotron mb-0">
+            <h1 class="text-center">
+                <a href="{{ path('admin_index')}}">
+                    Ochildren Administration
+                </a>
+            </h1>
+        </div>
+        <nav>
+            <ul class="nav nav-tabs justify-content-center mb-2">
+                <li class="nav-item">
+                    <a class="nav-link {% block adminHome %}{% endblock %}" href="{{ path('admin_index') }}"><i class="fas fa-home text-success"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app.swagger_ui') }}"><i class="fas fa-book text-success"></i> DOC API <i class="fas fa-external-link-alt text-danger"></i></a>
+                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link {% block adminWorld %}{% endblock %}" href="{{ path('admin_world_index') }}"><i class="fas fa-globe-europe text-success"></i> Gestion des mondes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% block adminCategory %}{% endblock %}" href="{{ path('admin_category_index') }}"><i class="fas fa-hashtag text-success"></i> Gestion des catégories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% block adminQuizz %}{% endblock %}" href="{{ path('admin_quizz_index') }}"><i class="fas fa-question-circle text-success"></i> Gestion des Quizzs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% block adminPuzzle %}{% endblock %}" href="{{ path('admin_puzzle_index') }}"><i class="fas fa-puzzle-piece text-success"></i> Gestion des puzzles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% block adminUser %}{% endblock %}" href="{{ path('admin_user_index') }}"><i class="fas fa-users text-success"></i> Gestion des utilisateurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt text-danger"></i> Deconnexion</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <div class="container-fluid mb-2">
+        <div class="row">
+            {% block sidebar %}{% endblock %}
+            <div class="col-12">
+                {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endfor %}
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <footer class="d-flex justify-content-center text-center">
+        <div class="card mx-2 bg-transparent">
+            <div class="card-body">
+                <div>Lorenzo</div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="text-primary btn-lg" href="https://fr.linkedin.com/in/lorenzomarozzo"><i class="fab fa-linkedin"></i></a>
+                    <a class="text-dark btn-lg" href="https://github.com/Grandpere"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="card mx-2 bg-transparent">
+            <div class="card-body">
+                <div>Mathieu</div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="text-primary btn-lg" href="https://fr.linkedin.com/in/mathieu-pereira"><i class="fab fa-linkedin"></i></a>
+                    <a class="text-dark btn-lg" href="https://github.com/MathieuOP"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="card mx-2 bg-transparent">
+            <div class="card-body">
+                <div>Anatole</div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="text-primary btn-lg" href="https://fr.linkedin.com/in/anatole-lucet-3b2790157"><i class="fab fa-linkedin"></i></a>
+                    <a class="text-dark btn-lg" href="https://github.com/AnatoleLucet"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="card mx-2 bg-transparent">
+            <div class="card-body">
+                <div>Philippe</div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="text-primary btn-lg" href="https://fr.linkedin.com/in/philippe-chiarla-459267143"><i class="fab fa-linkedin"></i></a>
+                    <a class="text-dark btn-lg" href="https://github.com/phil2611"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        {# <table>
+            <tr>
+                <td>Lorenzo</td>
+                <td>Mathieu</td>
+                <td>Anatole</td>
+                <td>Philippe</td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="text-primary px-2" href="https://fr.linkedin.com/in/lorenzomarozzo"><i class="fab fa-linkedin"></i></a>
+                    <a class="text-dark px-2" href="https://github.com/Grandpere"><i class="fab fa-github"></i></a>
+                </td>
+                <td>
+                    <a class="text-primary px-2" href="https://fr.linkedin.com/in/mathieu-pereira"><i class="fab fa-linkedin"></i></a>
+                    <a class="text-dark px-2" href="https://github.com/MathieuOP"><i class="fab fa-github"></i></a>
+                </td>
+                <td>
+                    <a class="text-primary px-2" href="https://fr.linkedin.com/in/anatole-lucet-3b2790157"><i class="fab fa-linkedin"></i></a>
+                    <a class="text-dark px-2" href="https://github.com/AnatoleLucet"><i class="fab fa-github"></i></a>
+                </td>
+                <td>
+                    <a class="text-primary px-2" href="https://fr.linkedin.com/in/philippe-chiarla-459267143"><i class="fab fa-linkedin"></i></a>
+                    <a class="text-dark px-2" href="https://github.com/phil2611"><i class="fab fa-github"></i></a>
+                </td>
+            </tr>
+        </table> #}
+    </footer>
+    {% block javascripts %}{% endblock %}
+</body>
+
 </html>

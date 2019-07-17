@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block adminHome %}active{% endblock %}
+
+{% block title %}Ochildren Administration{% endblock %}
+
+
+{% block body %}
+<div class="window">
+    <div class="head">O'children Admin</div>
+    <div class="terminal">
+        <p class="log">
+            Bienvenue sur l'administration d'Ochildren. Que souhaitez vous faire ?
+        </p>
+        <div id="wrap">
+            <span class="cursor">{{ app.user.firstname}}@{{ app.request.server.get("SERVER_NAME") }}</span> <span class="end-line">$ </span>
+        </div>
+        <div class="command">
+            <ul>
+                <li>
+                    <a class="term-link" href="{{ path('admin_world_index') }}">Gérer les mondes</a>
+                </li>
+                <li>
+                    <a class="term-link" href="{{ path('admin_category_index') }}">Gérer les catégories</a>
+                </li>
+                <li>
+                    <a class="term-link" href="{{ path('admin_quizz_index') }}">Gérer les quizzs</a>
+                </li>
+                <li>
+                    <a class="term-link" href="{{ path('admin_puzzle_index') }}">Gérer les puzzles</a>
+                </li>
+                <li>
+                    <a class="term-link" href="{{ path('admin_user_index') }}">Gérer les utilisateurs</a>
+                </li>
+                <li>
+                    <a class="term-link term-link__logout" href="{{ path('app_logout') }}">Se déconnecter</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

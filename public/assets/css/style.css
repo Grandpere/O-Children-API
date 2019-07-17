@@ -1,0 +1,159 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #FEFAF7;
+}
+
+a:hover {
+    color: #343a40;
+    text-decoration: none;
+}
+
+.jumbotron {
+    background-color: #B7DFFF;
+    height: 10%;
+    padding: 20px 0;
+}
+
+.nav {
+    background-color: #B7DFFF;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #FEFAF7;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.container-fluid {
+    min-height: 72%;
+}
+
+.window {
+    background: #222;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+    font-family: monospace;
+    width: 1000px;
+    border-radius: 5px 5px 0 0;
+    border-top: none;
+    border: 5px solid #d2d4d6;
+    box-shadow: 2px 10px 20px rgba(0,0,0,0.7);
+}
+
+.head {
+    height: 25px;
+    padding: 5px;
+    background-color: #d2d4d6;
+    color: #000;
+    line-height: 20px;
+    font-weight: bold;
+}
+
+.terminal {
+    margin: 20px;
+    font-size: 16px;
+    color: #fff;
+}
+    
+.log {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.cursor {
+    color: #22da26;
+}
+
+.end-line {
+    color: rgb(26, 158, 240);
+    font-weight: bold;
+}
+
+.end-line:after {
+    content:"▊";    
+    color: #fff;
+	opacity: 0;
+	animation: cursor 1s infinite;
+}
+@keyframes cursor {
+	0% {
+		opacity: 0;
+	}
+	40% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	90% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+ul {
+    list-style-type: none;
+    margin-bottom: 0;
+}
+
+.term-link:hover {
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.term-link__logout:hover {
+    background-color: #dc3545;
+    color: #fff;
+    text-decoration: none;
+}
+
+.term-link:hover::before {
+    content:'< ';
+}
+
+.term-link:hover::after {
+    content:' >';
+}
+
+.terminal input {
+    border: none;
+    background-color: #222;
+    border: 1px dotted #69e23a;
+    color: #69e23a;
+}
+
+.terminal input:focus {
+    background-color: #2b2b2b;
+}
+
+table.table thead tr {
+    background-color: #B7DFFF;
+    text-align: center;
+}
+
+table.table tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+table.table tbody tr:nth-child(even) {
+    background-color: #eee;
+}
+
+footer {
+    background-color: #B7DFFF;
+}
+
+footer .card {
+    border: none;
+}

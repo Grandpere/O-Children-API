@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block adminQuizz %}active{% endblock %}
+
+{% block title %}New Quizz{% endblock %}
+
+{% block body %}
+    <h1>Create new Quizz</h1>
+
+    {{ include('admin/quizz/_form.html.twig') }}
+
+    <a class="btn btn-outline-dark mt-2" href="{{ path('admin_quizz_index') }}">back to list</a>
+{% endblock %}

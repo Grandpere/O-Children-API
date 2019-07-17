@@ -1,0 +1,24 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="window">
+    <div class="head">404 - Page not found</div>
+    <div class="terminal">
+        <p class="log">
+            The requested page couldn't be located. Checkout for any URL misspelling
+        </p>
+        <div id="wrap">
+            <span class="cursor">{{ app.user.firstname}}@{{ app.request.server.get("SERVER_NAME") }}</span> <span class="end-line">$ </span>
+        </div>
+        <div class="command">&nbsp;</div>
+        <div class="command">
+            <ul>
+                <li>
+                    <a class="term-link" href="{{ path('admin_index') }}">return to the homepage</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
