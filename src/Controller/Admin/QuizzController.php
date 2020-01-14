@@ -43,7 +43,6 @@ class QuizzController extends AbstractController
                 $fileName = $fileUploader->upload($file);
                 $quizz->setImage($fileName);
             }
-            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($quizz);
             $entityManager->flush();
