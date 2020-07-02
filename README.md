@@ -124,9 +124,10 @@ To get a local copy up and running follow these simple steps.
    openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
     ```
    [More information](https://github.com/lexik/LexikJWTAuthenticationBundle/blob/master/Resources/doc/index.md#installation)
-9. Configure JWT
+9. Configure JWT 
 
     :warning: put your pass_phrase (previous step) in .env.local to be able generate token
+    
     [More information](https://github.com/lexik/LexikJWTAuthenticationBundle/blob/master/Resources/doc/index.md#configuration)
    
    
