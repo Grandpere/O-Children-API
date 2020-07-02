@@ -55,7 +55,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![O'Children backend ScreenShot]](./docs/images/ochildren.gif)
+![O'Children backend ScreenShot](docs/images/ochildren.gif)
 
 The objective of this project was to develop an educational site.
 
